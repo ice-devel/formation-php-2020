@@ -136,8 +136,108 @@
         // on rentre car même si les valeurs sont équivalentes
         // les types sont différents
     }
-    
+
     if (1 !== true) {
         // on rentre
     }
+
+    $chaine = "bonjour";
+    $search = "o";
+    // strpos est une fonction qui permet de chercher une chaine dans une chaine
+    // la position est retournée si elle est trouvée, false est renvoyé si la chaine n'est pas trouvé
+    if (strpos($chaine, $search) != false) {
+        echo "o se trouve dans bonjour";
+    }
+
+    $search = "r";
+    if (strpos($chaine, $search) != false) {
+        echo "r se trouve dans bonjour";
+    }
+
+    $search = "z";
+    if (strpos($chaine, $search) != false) {
+        // on rentre pas
+        // echo "z se trouve dans bonjour";
+    }
+
+    $search = "b";
+    if (strpos($chaine, $search) != false) {
+        // 0 != false
+        // on va pas rentrer alors qu'on devrait
+        // car 0 est équivalent à false
+    }
+    // correction :
+    if (strpos($chaine, $search) !== false) {
+        // on rentre :)
+    }
+
+// Précisions sur les booléens
+    if (true) {
+
+    }
+
+    $isAllowed = true;
+
+    if ($isAllowed == true) {
+        echo "Vous êtes VIP";
+    }
+
+    if ($isAllowed) {
+        echo "VIP";
+    }
+
+    if ($isAllowed == false) {
+        echo "Section interdite";
+    }
+
+    if (!$isAllowed) {
+        echo "Section interdite";
+    }
+
+    // V1
+    $age = 20;
+    if ($age >= 18) {
+        echo "Vous êtes majeur";
+    }
+    else {
+        echo "Vous êtes mineur";
+    }
+
+    // V2
+    $age = 20;
+    if ($age >= 18) {
+        $message = "majeur";
+    }
+    else {
+        $message = "mineur";
+    }
+
+    echo "Vous êtes ".$message;
+
+    // V3 : ternaire : possible quand la seule instruction se trouvant dans le if, ainsi
+    // que dans le else est une affectation
+    // une ternaire sert à affecter une valeur à une variable
+    $message = $age >= 18 ? "majeur" : "mineur";
+    echo "Vous êtes ".$message;
+
+    $age = 17;
+    // V1
+    if ($age >= 18) {
+        $isAllowed = true;
+    }
+    else {
+        $isAllowed = false;
+    }
+    // autorisé à voir ce film ?
+    if ($isAllowed) {}
+    // autorisé à jouer à ce jeu ?
+    if ($isAllowed) {}
+
+    // V2
+    $isAllowed = $age >= 18 ? true : false;
+
+    // V3
+    $isAllowed = $age >= 18;
+
+
 ?>
