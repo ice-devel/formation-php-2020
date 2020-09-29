@@ -8,6 +8,18 @@
     $currentYear = date('Y');
     $currentMonth = date('m');
     $currentDay = date('d');
+    $birthYear = 2000;
+    $birthMonth = 9;
+    $birthDay = 30;
+
+    $age = $currentYear - $birthYear;
+
+    if ($currentMonth < $birthMonth || ($currentMonth == $birthMonth && $currentDay < $birthDay)) {
+        $age = $age - 1;
+    }
+
+    echo $age."<br>";
+
 
     /*
      * Exo 2 : afficher la table de multiplication d'un nombre contenu
@@ -19,6 +31,9 @@
      * 9 * 3 = 27
      */
     $nb = 3;
+    for ($i=1;$i<=9;$i++) {
+        echo $i." * ".$nb." = ".($i * $nb)."<br>";
+    }
 
 
 
