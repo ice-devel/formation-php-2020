@@ -22,3 +22,32 @@
     * de naissance, et qui retourne l'âge correspondant
     * en se souciant de savoir si l'anniversaire est passé ou non
     **/
+
+    /**
+     * Exo 6 :
+     * Créer une fonction qui prend en paramètre un tableau de string
+     * Et qui retourne une chaine qui correspond à tous les éléments du tableau
+     * concaténés ensemble
+     *
+     * Exo 7 :
+     * Créer une fonction qui prend en paramètre un tableau (d'entier)
+     * et qui retourne la valeur la plus grande qui s'y trouve
+     * [3, 5, 7, 2, 7]
+     */
+
+    function getMax($tabInts) {
+        $max = $tabInts[0];
+        foreach ($tabInts as $int) {
+            if ($int > $max) {
+                $max = $int;
+            }
+        }
+
+        return $max;
+    }
+
+    $ages = [10, 25, 59, 49];
+    $ageMax = getMax($ages);
+
+    $points = [10, 400, 1000, 999];
+    $pointMax = getMax($points);
