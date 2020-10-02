@@ -66,6 +66,10 @@
             }
         }
     ?>
+    <p>
+        Penser à indiquer l'attribut enctype pour autoriser l'upload
+    </p>
+    
     <form method="post" enctype="multipart/form-data">
         <input type="text" name="name"/>
 
