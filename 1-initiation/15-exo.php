@@ -8,7 +8,7 @@
     * depuis la page précédente.
     * Exemple : je saisi "toto" dans le champs "nom", je valide le formulaire :
     * la page se recharge et "toto" est déjà inscrit dans le champs "nom".
-    * Idem pour le pays, j'ai choisi "France" dans la liste :
+    * Idem pour le pays, j'avais choisi "France" dans la liste :
     * quand la page se recharge, l'option doit être sélectionnée
     * par défaut
     */
