@@ -29,4 +29,8 @@
  * SELECT * FROM player WHERE name
  * SELECT * FROM player WHERE zipcode
  * SELECT * FROM player WHERE name AND zipcode
+ * Exemples :
+ * l'utilisateur saisit toto et 59000, il faut donc afficher tous les joueurs
+ * qui s'appellent toto et qui habitent à Lille
+ * l'utilisateur saisit david, il faut afficher tous les joueurs qui s'appellent david
  */
