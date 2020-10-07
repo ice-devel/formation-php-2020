@@ -21,6 +21,17 @@
 <body>
     <h1>Liste des joueurs</h1>
 
+    <?php
+        // si on vient de la page 7-update.php suite à une redirection
+        // (mise à jour d'un joueur effective), on affiche un message
+        if (isset($_GET['updated-player'])) {
+            echo "<p>
+                    Player bien modifié
+                </p>";
+        }
+    ?>
+
+
     <table>
         <?php
             foreach ($players as $player) {
