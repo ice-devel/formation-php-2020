@@ -143,19 +143,27 @@
     ?>
 
     <form method="post">
-        <input type="text" name="name" placeholder="Nom"/><br>
-        <input type="text" name="birthdate" placeholder="Date"/><br>
-        <input type="email" name="email" placeholder="Email"/><br>
-        <input type="number" name="points" placeholder="Points"/><br>
-        <input type="text" name="zipcode" placeholder="CP"/><br>
+        <input type="text" name="name" placeholder="Nom" value="<?php if (isset($name)) echo $name; ?>"/><br>
+        <input type="text" name="birthdate" placeholder="Date" value="<?php if (isset($birthdate)) echo $birthdate; ?>"/><br>
+        <input type="email" name="email" placeholder="Email" value="<?php if (isset($email)) echo $email; ?>"/><br>
+        <input type="number" name="points" placeholder="Points" value="<?php if (isset($points)) echo $points; ?>"/><br>
+        <input type="text" name="zipcode" placeholder="CP" value="<?php if (isset($zipcode)) echo $zipcode; ?>"/><br>
         <select name="team">
             <option></option>
             <?php
-                foreach ($teams as $team) {
-                    echo "<option value='".$team['id']."'>".$team['name']."</option>";
+                foreach ($teams as $t) {
+                    /*
+                    $isSelected = "";
+                    if (isset($team) && $team == $t['id']) {
+                        $isSelected = "selected";
+                    }
+                    */
+                    $isSelected = isset($team) && $team == $t['id'] ? "selected" : "";
+                    echo "<option value='".$t['id']."' ".$isSelected.">".$t['name']."</option>";
                 }
             ?>
         </select>
+
         <input type="submit" name="btn-add"/>
     </form>
 </body>
