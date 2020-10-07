@@ -5,7 +5,7 @@
     $pdo = new PDO("mysql:host=localhost;dbname=formation_202008", "root");
 
     // sélection de tous les joueurs
-    $sql = "SELECT id, name, birthdate FROM player";
+    $sql = "SELECT * FROM player";
     $stmt = $pdo->query($sql);
     $players = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

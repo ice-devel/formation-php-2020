@@ -2,6 +2,11 @@
     /**
     *  LIST
     */
+    // récupération de tous les joueurs
+    $pdo = new PDO("mysql:host=localhost;dbname=formation_202008", "root");
+    $sql = "SELECT * FROM player;";
+    $stmt = $pdo->query($sql);
+    $players = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!doctype html>
@@ -16,6 +21,20 @@
 <body>
     <h1>Liste des joueurs</h1>
 
+    <table>
+        <?php
+            foreach ($players as $player) {
+                echo "
+                <tr>
+                    <td>".$player['id']."</td>
+                    <td>".$player['name']."</td>
+                    <td>".$player['birthdate']."</td>
+                    <td><a href='7-update.php?id=".$player['id']."'>Editer</a></td>
+                    <td>Supprimer</td>
+                </tr>";
+            }
+        ?>
+    </table>
 
 </body>
 </html>
