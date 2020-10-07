@@ -29,6 +29,18 @@
                     Player bien modifié
                 </p>";
         }
+
+        if (isset($_GET['deleted-player'])) {
+            echo "<p>
+                    Player bien supprimé
+                </p>";
+        }
+
+        if (isset($_GET['delete-error'])) {
+            echo "<p>
+                    Erreur de suppression, serveur en danger
+                </p>";
+        }
     ?>
 
 
@@ -41,7 +53,7 @@
                     <td>".$player['name']."</td>
                     <td>".$player['birthdate']."</td>
                     <td><a href='7-update.php?id=".$player['id']."'>Editer</a></td>
-                    <td>Supprimer</td>
+                    <td><a href='8-delete.php?id=".$player['id']."'>Supprimer</a></td>
                 </tr>";
             }
         ?>

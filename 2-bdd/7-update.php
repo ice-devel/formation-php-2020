@@ -2,6 +2,35 @@
     /**
     *  UPDATE
     */
+    /*
+   *
+   * Récap
+   * Il faut mettre un moyen d'arriver sur cette page en sachant quel utilisateur supprimé :
+   * 1 - créer un lien vers cette page depuis la page liste (par exemple) en passant un paramètre GET
+     * contenant l'id du player à modifier
+     2 - on arrive sur cette page :
+        a - on récupère le paramètre (vérification existe-t-il ?)
+        b - on le récupère le joueur associé en base (vérification le joueur est-il toujours en bdd ?)
+        c - on affiche les informations du joueur dans le formulaire HTML
+
+
+   * Soumission d'un formulaire:
+   * 1 - formulaire soumis ?
+   * 2 - récupération des valeurs
+   * 2bis - (façon personnelle fab de faire les choses) écraser les valeurs du tableau PHP player (pour l'affichage)
+   * 3 - vérification des valeurs
+   * 4 - si pas d'erreurs, requête et/ou traitement avec ces valeurs
+   *
+   * Requete SQL
+   * 1 - connexion serveur / choix base
+   * 2 - requete sql
+   * 3 - préparation
+   * 4 - exécution
+   * 5 - !! redirection si l'update est validé (vers la page actuelle ou la page listing par exemple)
+     * pour éviter de recharger le même envoi POST si on actualise la page
+   *
+   */
+
     // récupérer l'id du joueur qu'on veut éditer : on a passé son id dans l'URL
     $id = filter_input(INPUT_GET, 'id');
 
@@ -48,9 +77,9 @@
     $stmt = $pdo->query($sql);
     $teams = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // formulaire soumis ?
+    // 1 - formulaire soumis ?
     if (isset($_POST['btn-edit'])) {
-        // récupération
+        // 2- récupération
         $name = filter_input(INPUT_POST, 'name');
         $birthdate = filter_input(INPUT_POST, 'birthdate');
         $email = filter_input(INPUT_POST, 'email');
@@ -58,7 +87,15 @@
         $zipcode = filter_input(INPUT_POST, 'zipcode');
         $team = filter_input(INPUT_POST, 'team');
 
-        // vérifications
+        // 2 bis- modifier le tableau player avec les nouvelles informations (pour l'affichage dans le form HTML)
+        $player['name'] = $name;
+        $player['birthdate'] = $birthdate;
+        $player['email'] = $email;
+        $player['points'] = $points;
+        $player['zipcode'] = $zipcode;
+        $player['team_id'] = $team;
+
+        // 3 - vérifications
         $errors = [];
         if ($name == "" || strlen($name) < 2 || strlen($name) > 40) {
             $errors[] = "Votre nom pas correct reremplir svp";
@@ -93,14 +130,6 @@
                 $errors[] = "la team n'existe pas";
             }
         }
-
-        // modifier le tableau player avec les nouvelles informations
-        $player['name'] = $name;
-        $player['birthdate'] = $birthdate;
-        $player['email'] = $email;
-        $player['points'] = $points;
-        $player['zipcode'] = $zipcode;
-        $player['team_id'] = $team;
 
         // 5 - enregistrement en bdd
         if (empty($errors)) {

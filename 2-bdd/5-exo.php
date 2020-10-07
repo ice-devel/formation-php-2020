@@ -107,6 +107,8 @@
                 ':zc' => $zipcode,
                 ':team' => ($team != "") ? $team : null,
             ]);
+
+            // penser à rediriger
         }
     }
 
