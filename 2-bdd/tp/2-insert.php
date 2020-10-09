@@ -16,8 +16,7 @@
         // 3 - vérifications
         $errors = [];
 
-        // todo
-        if ($name == "" || strlen($name) > 50) {
+        if ($name == "" || mb_strlen($name) > 50) {
             $errors['name'] = "Le nom est obligatoire et doit faire max 50 carac.";
         }
 
@@ -101,6 +100,5 @@
     </select>
     <input type="submit" name="btn-product" />
 </form>
-
 </body>
 </html>

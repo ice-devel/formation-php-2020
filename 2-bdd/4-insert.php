@@ -31,7 +31,7 @@
         // 3 - vérifications
         $errors = [];
 
-        if ($name == "" || strlen($name) > 30) {
+        if ($name == "" || mb_strlen($name) > 30) {
             $errors['name'] = "Le nom est obligatoire et doit faire max 30 carac.";
         }
 

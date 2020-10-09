@@ -43,7 +43,7 @@
 
         // vérifications
         $errors = [];
-        if ($name == "" || strlen($name) < 2 || strlen($name) > 40) {
+        if ($name == "" || mb_strlen($name) < 2 || mb_strlen($name) > 40) {
             $errors[] = "Votre nom pas correct reremplir svp";
         }
 

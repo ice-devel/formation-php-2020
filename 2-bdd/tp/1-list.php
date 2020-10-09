@@ -3,9 +3,11 @@
  * Liste des produits
  */
     $pdo = new PDO("mysql:host=localhost;dbname=formation_202008", "root");
-    $sql = "SELECT * FROM product ORDER BY created_at DESC;";
+    $sql = "SELECT * FROM product P
+            LEFT OUTER JOIN category C ON P.category_id = C.id
+            ORDER BY P.created_at DESC;";
     $stmt = $pdo->query($sql);
-    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $products = $stmt->fetchAll(PDO::FETCH_NUM);
 ?>
 
 <!doctype html>
@@ -24,14 +26,16 @@
     <table>
         <?php
             foreach ($products as $product) {
-                $product['price'] = str_replace('.', ',', $product['price']);
+                $product[3] = str_replace('.', ',', $product[3]);
                 echo "
                     <tr>
-                        <td>".$product['id']."</td>
-                        <td>".$product['name']."</td>
-                        <td>".$product['price']."</td>
-                        <td><a href='3-update.php?id=".$product['id']."'>Editer</a></td>
-                        <td><a href='4-delete.php?id=".$product['id']."'>Supprimer</a></td>
+                        <td>".$product[0]."</td>
+                        <td>".$product[1]."</td>
+                        <td>".$product[2]."</td>
+                        <td>".$product[3]."</td>
+                        <td>".$product[8]."</td>
+                        <td><a href='3-update.php?id=".$product[0]."'>Editer</a></td>
+                        <td><a href='4-delete.php?id=".$product[0]."' onclick=\"return confirm('Suppression ".$product[1]." ?')\">Supprimer</a></td>
                     </tr>";
             }
         ?>
