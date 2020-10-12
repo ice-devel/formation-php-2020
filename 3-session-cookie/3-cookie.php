@@ -1,6 +1,4 @@
 <?php
-    date_default_timezone_set('Europe/Paris');
-
     /*
      * Les cookies sont un moyen de transmettre des informations de page en page
      * Ils sont stockés sur le client
@@ -9,10 +7,13 @@
 
     if (isset($_GET['logout'])) {
         // supprimer la variable PHP pour que le reste du script ne puisse l'utiliser
-        unset($_COOKIE['username']);
+        //unset($_COOKIE['username']);
         // côté navigateur, il faut en fait envoyer un cookie qui le même nom
-        // pour écraser, mais en disant que le nouveau doit expirer immédiatement
-        setcookie('username', null, time() + 7200 + 10);
+        // pour écraser
+        setcookie('username', null);
+        // rediriger vers une même page pour prendre en compte de suite la suppression du cookie
+        header('Location: 3-cookie.php');
+        exit;
     }
 
     if (isset($_POST['name'])) {
@@ -20,7 +21,10 @@
 
         // stocker une valeur en session, la clé 'username' est le choix du developpeur
         // pour un mois
-       setcookie("username", $name, time() + 7200 + 3600);
+       setcookie("username", $name, time() + 3600);
+       // rediriger vers une page pour prendre en compte de suite le cookie
+       header('Location: 3-cookie.php');
+       exit;
     }
 ?>
 
