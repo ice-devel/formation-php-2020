@@ -86,7 +86,87 @@
     var_dump($matches);
     echo "</pre>";
 
-
+    /*
+     * Structure d'expression régulière :
+     * /pattern/options
+     *
+     * On construit l'expression caractère par caractères
+     *
+     * avec des caractères précis :
+     * /salut/
+     *
+     * Classes de caractères (remplacé par un seul caractère)
+     * [a-z] : lettres minuscules
+     * [b-j] : lettre de b jusqu'à j
+     *
+     * [0-9] : chiffres de 0 à 9
+     * [2-7] : chiffres de 2 à 7
+     * [aeiou] : une des voyelles
+     *
+     * [a-z0-9A-Z] : lettres minuscules, chiffres ou majuscules
+     * [1-34a-cj-] : de 1 à 3 ou 4 ou de a à c ou j ou tiret
+     *
+     * [^0-9] : tout sauf les chiffres de 0 à 9
+     * [^a0-3i-p] : tous sauf le a, le 0 à 3, et le i à p
+     *
+     * Classe abrégées :
+     * [0-9] : \d
+     * [^0-9] : \D
+     *
+     * [a-zA-Z0-9_] : \w
+     * [^a-zA-Z0-9_] : \W
+     *
+     * \n : saut de ligne
+     * \t : tabulation
+     * \s : espace
+     * . : tout  (un seul caractère mais n'importe lequel sauf \n)
+     *
+     *  Quantificateurs :
+     * ? : 0 ou 1 fois
+     * + : 1 ou plusieurs fois
+     * * : 0, 1 ou plusieurs fois
+     * {3} : 3 fois
+     * {3, 5} : min 3 max 5 fois
+     * {3,} : min 3 fois
+     * {,5} : max 5 fois
+     *
+     * (guitare|batterie|clavier|basse) : soit guitare, soit batterie, ...
+     * (basse|flute){2}: basseflute ou bassebasse ou flutebasse ou fluteflute
+     *
+     *
+     * Caractères spéciaux :
+     * [] () + * ? ! ^ $
+     * \
+     *
+     * Si on veut recherche le vrai caractère parmi les caractères spéciaux,
+     * il faut l'échapper : \
+     * a+(toto|tata)\[\\
+     *
+     * Commence par et termine :
+     *
+     * /^salut/ : commence par salut
+     * /salut$/ : termine par salut
+     * /^salut$/ : précisément le mot salut
+     *
+     * Parenthèses capturantes :
+     * Les parenthèses servent
+     * à décomposer les résultats de recherche, comme on l'a vu avec
+     * preg_match_all dans le tableau $matches
+     *
+     *
+     * Pourquoi les délimiteurs ?
+     * / # @
+     * /salut/i : insensible à la casse
+     *
+     * /salut/s : le ".", (le points) sert maintenant aussi pour les retours à la ligne : \n
+     *
+     * Attention les caractères utilisés comme délimiteurs deviennent des caractères
+     * spéciaux, il faut les échapper si on les recherche comme caractère
+     *
+     * /sal\/ut/
+     * @salut\@@
+     *
+     */
 
 
 
