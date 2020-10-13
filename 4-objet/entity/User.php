@@ -62,7 +62,7 @@
         /**
          * @return mixed|null
          */
-        public function getId(): ?mixed
+        public function getId()
         {
             return $this->id;
         }
@@ -70,7 +70,7 @@
         /**
          * @param mixed|null $id
          */
-        public function setId(?mixed $id): void
+        public function setId($id): void
         {
             $this->id = $id;
         }
@@ -94,7 +94,7 @@
         /**
          * @return mixed|null
          */
-        public function getEmail(): ?mixed
+        public function getEmail()
         {
             return $this->email;
         }
@@ -102,7 +102,7 @@
         /**
          * @param mixed|null $email
          */
-        public function setEmail(?mixed $email): void
+        public function setEmail($email): void
         {
             $this->email = $email;
         }
@@ -110,7 +110,7 @@
         /**
          * @return mixed|null
          */
-        public function getIsEnabled(): ?mixed
+        public function getIsEnabled()
         {
             return $this->isEnabled;
         }
@@ -118,7 +118,7 @@
         /**
          * @param mixed|null $isEnabled
          */
-        public function setIsEnabled(?mixed $isEnabled): void
+        public function setIsEnabled($isEnabled): void
         {
             $this->isEnabled = $isEnabled;
         }
