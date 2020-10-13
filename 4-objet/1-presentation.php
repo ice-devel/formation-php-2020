@@ -2,8 +2,26 @@
 /**
  * POO : programmation orientée objet
  * On structure son code grâce des classes d'objets
- * 1- Modélisation des entités métiers
+ *  1- Modélisation des classes
+ *  2- Instanciation d'un objet (avec le mot-clé new)
  *
+ *
+ * Pourqui la POO ?
+ *  - Meilleure structure de code : centralisation de ce qui se rapporte au même concept dans une classe
+ *  - Meilleure évolutivité / maintenance
+ *  - Meilleure compréhension par les autres développeurs :
+ *    on respecte tous et toutes les mêmes conventions et principes
+ *
+ *
+ *  Dans une classe :
+ * - propriété
+ * - constructeur
+ * - getter/setter
+ * - méthode
+ *
+ * Grand principe de la POO : le principe d'encapsulation
+ * qui permet de centraliser les accès (lecture/écriture) aux propriétés
+ * pour s'assurer : des types de données, des valeurs, etc.
  */
 
 
