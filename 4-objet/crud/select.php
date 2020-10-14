@@ -41,6 +41,8 @@
                 <td>".$player->getId()."</td>
                 <td>".$player->getName()."</td>
                 <td>".$player->getBirthdate()."</td>
+                <td><a href='update.php?id=".$player->getId()."'>Modifier</a></td>
+                <td><a href='delete.php?id=".$player->getId()."'>Supprimer</a></td>
             </tr>";
 
         }

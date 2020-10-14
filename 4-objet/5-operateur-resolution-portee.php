@@ -8,7 +8,7 @@
         private $name;
 
         // ceci est une constante de classe
-        public const CRITICAL_HIT_MULTIPLY = 2;
+        public const CRITICAL_HIT_MULTIPLY = 20;
 
         // propriétés statiques (par exemple : compteur d'instance)
         public static $count = 0;

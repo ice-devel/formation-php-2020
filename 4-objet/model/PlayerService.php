@@ -5,7 +5,7 @@
          * Récupération des informations envoyées depuis le formulaire
          * Retourne un objet Player
          */
-        public function handleRequest() {
+        public function handleRequest($player=null) {
             $name = filter_input(INPUT_POST, 'name');
             $birthdate = filter_input(INPUT_POST, 'birthdate');
             $email = filter_input(INPUT_POST, 'email');
@@ -13,9 +13,20 @@
             $zipcode = filter_input(INPUT_POST, 'zipcode');
             $teamId = filter_input(INPUT_POST, 'team');
 
-            $coucou = new Player(null, $name, $birthdate, $email, $points, $zipcode, $teamId);
-
-            return $coucou;
+            // mettre à jour un joueur
+            if ($player != null) {
+                $player->setName($name);
+                $player->setBirthdate($birthdate);
+                $player->setEmail($email);
+                $player->setPoints($points);
+                $player->setZipcode($zipcode);
+                $player->setTeamId($teamId);
+                return $player;
+            }
+            else {
+                $coucou = new Player(null, $name, $birthdate, $email, $points, $zipcode, $teamId);
+                return $coucou;
+            }
         }
 
         /*

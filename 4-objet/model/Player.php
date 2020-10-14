@@ -1,6 +1,4 @@
 <?php
-
-
     class Player
     {
         private $id;
@@ -154,6 +152,14 @@
             $this->weaponId = $weaponId;
         }
 
-        
+        public function getBirthdateFR() {
+            if ($this->getBirthdate() != null) {
+                $dateTemp = explode("-", $this->getBirthdate());
+                $dateFR = $dateTemp[2]."/".$dateTemp[1]."/".$dateTemp[0];
+                return $dateFR;
+            }
+
+            return null;
+        }
         
     }
