@@ -131,5 +131,17 @@ class PlayerManager
 
         return $editOK;
     }
+
+    public function delete($id) {
+        // connexion à la bdd
+        $pdo = new PDO("mysql:host=localhost;dbname=formation_202008", "root");
+        // requête sql de suppression
+        $sql = "DELETE FROM player WHERE id = :id";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $result = $stmt->execute();
+
+        return $result;
+    }
 }
 

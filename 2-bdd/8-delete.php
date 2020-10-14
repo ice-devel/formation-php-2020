@@ -1,6 +1,6 @@
 <?php
     /**
-    *  DELETE
+    *  DELETE POO
     */
     // récupérer l'id du joueur qu'on veut éditer : on a passé son id dans l'URL
     $id = filter_input(INPUT_GET, 'id');
