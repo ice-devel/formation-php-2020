@@ -33,7 +33,7 @@
     if (isset($_POST['btn-edit'])) {
         // 2- récupération
        $playerService = new PlayerService();
-       $player = $playerService->handleRequest($player);
+       $playerService->handleRequest($player);
        $birthdateToDisplay = $player->getBirthdate();
 
        $errors = $playerService->isValid($player, $teams);
