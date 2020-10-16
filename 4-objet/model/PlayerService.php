@@ -20,7 +20,23 @@
                 $player->setEmail($email);
                 $player->setPoints($points);
                 $player->setZipcode($zipcode);
+
+                // on ne travaille l'id de la team, mais un objet Team
                 $player->setTeamId($teamId);
+
+                // aller chercher dans le teamManager
+                // (on les a stocké dans la propriété statique $teams)
+                $teams = TeamManager::getAllTeams();
+
+                // on cherche l'équipe choisie dans le formulaire
+                foreach ($teams as $t) {
+                    if ($t->getId() == $teamId) {
+                        // on associe l'équipe au joueur
+                        $player->setTeam($t);
+                    }
+                }
+
+
                 return $player;
             }
             else {
@@ -32,7 +48,7 @@
         /*
          * Retoune un tableau d'erreurs (si vide == pas d'erreur)
          */
-        public function isValid($player, $teams) {
+        public function isValid($player, $teams=null) {
             $errors = [];
             if ($player->getName() == "" || mb_strlen($player->getName()) < 2 || mb_strlen($player->getName()) > 40) {
                 $errors[] = "Votre nom pas correct reremplir svp";
@@ -55,11 +71,12 @@
             }
 
             // on a choisi une équipe ?
-            if ($player->getTeamId() != "") {
+            /*
+            if ($player->getTeam() != null) {
                 // est-ce que l'équipe en base ?
                 $teamExist = false;
                 foreach ($teams as $t) {
-                    if ($t->getId() == $player->getTeamId()) {
+                    if ($t->getId() == $player->getTeam()->getId()) {
                         $teamExist = true;
                     }
                 }
@@ -67,6 +84,7 @@
                     $errors[] = "la team n'existe pas";
                 }
             }
+            */
 
             return $errors;
         }

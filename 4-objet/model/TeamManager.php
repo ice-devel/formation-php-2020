@@ -1,7 +1,17 @@
 <?php
     class TeamManager
     {
+        static private $teams;
+
+        static public function getAllTeams() {
+            return TeamManager::$teams;
+        }
+
         public function findAll() {
+            if (TeamManager::$teams != null) {
+                return TeamManager::$teams;
+            }
+
             $pdo = new PDO("mysql:host=localhost;dbname=formation_202008", "root");
 
             // sélection de tous les joueurs
@@ -19,6 +29,8 @@
 
                 $teams[] = $team;
             }
+
+            TeamManager::$teams = $teams;
 
             return $teams;
         }

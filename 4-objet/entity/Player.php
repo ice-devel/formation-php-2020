@@ -29,4 +29,10 @@ class Player
         $hitPlayer->health = $hitPlayer->health - $this->strength;
     }
 
+    public function __toString()
+    {
+        throw new PlayerException();
+        return "";
+    }
+
 }

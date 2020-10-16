@@ -10,9 +10,11 @@
         private $teamId;
         private $weaponId;
 
+        private $team;
+
         public function __construct($id=null, $name=null,
                                     $birthdate=null, $email=null, $points=null,
-                                    $zipcode=null, $teamId=null, $weaponId=null)
+                                    $zipcode=null, $teamId=null, $weaponId=null, $team=null)
         {
             $this->id = $id;
             $this->name = $name;
@@ -22,6 +24,7 @@
             $this->zipcode = $zipcode;
             $this->teamId = $teamId;
             $this->weaponId = $weaponId;
+            $this->team = $team;
         }
 
         /**
@@ -151,6 +154,23 @@
         {
             $this->weaponId = $weaponId;
         }
+
+        /**
+         * @return mixed|null
+         */
+        public function getTeam()
+        {
+            return $this->team;
+        }
+
+        /**
+         * @param mixed|null $team
+         */
+        public function setTeam($team): void
+        {
+            $this->team = $team;
+        }
+
 
         public function getBirthdateFR() {
             if ($this->getBirthdate() != null) {

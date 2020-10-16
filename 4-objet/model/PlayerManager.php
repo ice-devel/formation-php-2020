@@ -7,22 +7,49 @@ class PlayerManager
         $pdo = new PDO("mysql:host=localhost;dbname=formation_202008", "root");
 
         // sélection de tous les joueurs
-        $sql = "SELECT * FROM player";
+        $sql = "SELECT P.id as 'id_player', P.name as 'name_player', P.birthdate, P.email, P.points, 
+                P.team_id, P.weapon_id, P.zipcode,
+                T.id as 'id_team', T.name as 'name_team', T.level
+                 FROM player P LEFT JOIN team T ON P.team_id = T.id";
         $stmt = $pdo->query($sql);
+
         $tabPlayers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $teamsTemp = [];
 
         // créer un tableau de Player
         $players = [];
         foreach ($tabPlayers as $tab) {
             $player = new Player();
-            $player->setId($tab['id']);
-            $player->setName($tab['name']);
+            $player->setId($tab['id_player']);
+            $player->setName($tab['name_player']);
             $player->setBirthdate($tab['birthdate']);
             $player->setEmail($tab['email']);
             $player->setPoints($tab['points']);
             $player->setTeamId($tab['team_id']);
             $player->setWeaponId($tab['weapon_id']);
             $player->setZipcode($tab['zipcode']);
+
+            if ($tab['id_team'] != null) {
+                // si l'équipe a déjà été créée en mémoire on la reprend au lieu
+                // d'instancier un nouvel objet
+                if (array_key_exists($tab['id_team'], $teamsTemp)) {
+                   $team = $teamsTemp[$tab['id_team']];
+               }
+               else {
+                   // on crée une nouvelle team pour chaque player
+                   // attention l'équipe rouge par exemple peut exister plusieurs fois en mémoire
+                   $team = new Team();
+                   $team->setId($tab['id_team']);
+                   $team->setName($tab['name_team']);
+                   $team->setLevel($tab['level']);
+
+                   $teamsTemp[$team->getId()] = $team;
+               }
+
+                // affecter l'équipe au joueur
+                $player->setTeam($team);
+            }
 
             $players[] = $player;
         }
@@ -57,7 +84,7 @@ class PlayerManager
             ':email' => $player->getEmail(),
             ':points' => $player->getPoints(),
             ':zc' => $player->getZipcode(),
-            ':team' => ($player->getTeamId() != "") ? $player->getTeamId() : null,
+            ':team' => ($player->getTeam() != null) ? $player->getTeam()->getId() : null,
         ]);
 
         return $result;
