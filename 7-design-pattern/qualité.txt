@@ -1,0 +1,20 @@
+Les principes SOLID / STUPID
+
+S : Single Responsibility Principle
+O : Open/Closed Principle
+L : Liskov Substitution Principle
+I : Interface Segregation
+D : Dependency Inversion
+
+A eviter :
+
+S : Singleton
+T : Tight coupling
+U : Untestability
+P : Premature Optimization
+I : Indescriptive naming
+D : Duplication
+
+Ou encore :
+DRY : don't repeat yourself
+KISS : Keep it Simple and Stupid
