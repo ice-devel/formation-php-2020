@@ -79,4 +79,56 @@ Dans un controller, on a accès à $this->render(), elle prend deux paramètres 
     - Afficher une variable : {{ nom_variable }}
     - Commentaire : {# ici mon commentaire #}
     - Faire quelquechose (condition, boucle) : {%  %}
+    
+- Hériter d'un template avec extends
+    - reprendre le contenu du template parent, et pouvoir modifier le contenu des blocks qui s'y trouvent
+    - on peut redéfinir les blocks dans l'ordre que l'on veut
+    - on peut reprendre le contenu du bloc parent grâce à la fonction "parent()"
+
+- Inclure des assets (css/js/images) dans un template : La fonction asset() pour générer automatiquement l'url vers un fichier
+
+- accéder aux propriétés d'un objet passé à un template : on peut écrire {{ objet.property }}
+ En réalité la propriété ne va appelée directement mais :
+    - vérifie si objet est un tableau, et property une clé valide de ce tableau : $objet['property']
+    - ensuite si finalement c'est un objet, vérifie si property est un attribut valide (existant et public : $object->property)
+    - Sinon, vérifie si property() est une méthode valide :  $object->property()
+    - Sinon, vérifie si getProperty() est une méthode valide : $object->getProperty()
+    - Sinon, vérifie si isProperty(), hasProperty() valide
+    - Sinon, regarde si __call est définie
+    - Sinon bug
+    
+## 3 - Entités
+Ce sont les données qu'on veut persister, qui représente le côté "métier" de notre application. Par ex pour un site e-commerce :
+produit, commande, compte client, etc.
+
+1 - Création d'entité : on va modéliser nos entités par des classes d'objets, et on laisse Doctrine (ORM) faire les intéractions
+avec la base de données grâce à un mapping.
+    1 - Configurer les accès à la base dans .env :
+        DATABASE_URL
+    2 - Créer la base de données
+        php bin/console doctrine:database:create
+    3 - Créer une entité 
+        php bin/console make:entity
+    4 - Mettre à jour la bdd
+        php bin/console doctrine:schema:update --force
+        
+2 - Utilisation des entités
+Dans un controller, on a besoin d'une entité : il faut utiliser Doctrine pour récupérer une entité
+ou l'instancier pour créer une nouvelle entité.
+
+Pour enregistrer une entité :
+    - récupération du manager de doctrine
+    - persist (prise en compte de l'objet par doctrine)
+    - flush (envoi en bdd)
+    - après un insert, l'id de l'objet est automatiquement setté
+    
+Pour récupérer une ou des entités : on récupère des entités en passant par les Repository associés
+aux entités que l'on veut récup.
+    
+
+    
+
+
+
+    
 
