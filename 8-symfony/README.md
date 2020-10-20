@@ -50,6 +50,7 @@ Si vous travaillez avec Apache :
 - .env : paramètres globaux à l'application (variable d'environnement),
     qu'on peut configurer au niveau de l'OS, du serveur, ou de symfony
 - composer.json : la configuration du projet et de ses dépendances
+- templates : créé avec la dépendance twig : on y placera toutes les vues (html)
 
 ### IV - Utilisation
 On ne crée pas un fichier par page, on va créer des routes qu'on va correspondre à un controller :
@@ -65,3 +66,17 @@ L'annotation doit se trouve juste au dessus de la fonction qui sera appelée
 si l'url correspond.
 
 ## 1-bis Routing
+
+## 2 - Templates
+Par défaut, les templates sont générés avec twig dans symfony.
+Twig est ce que l'on appelle un moteur de template (template engine).
+
+Dans un controller, on a accès à $this->render(), elle prend deux paramètres :
+- le chemin du fichier "vue" depuis le dossier templates
+- des paramètres : tableau associatif dont les clés seront les noms des variables dans le template
+
+- Dans le template, on peut alors utiliser ces variables
+    - Afficher une variable : {{ nom_variable }}
+    - Commentaire : {# ici mon commentaire #}
+    - Faire quelquechose (condition, boucle) : {%  %}
+

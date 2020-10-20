@@ -1,0 +1,66 @@
+{% extends 'base.html.twig'%}
+
+{# On peut redéfinir les blocks dans l'ordre qu'on l'on veut, cela ne change rien #}
+{# ici on écrase le contenu du block title du template parent #}
+{% block title %}{{ parent() }} Coucou{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/script.js') }}"></script>
+{% endblock %}
+
+{# ici on modifie le contenu du block body du template parent #}
+{% block body %}
+    <!--
+        Le commentaire en HTML : est dans le code source html de la page
+    -->
+    {#
+        Le commentaire en Twig : n'est pas renvoyé dans le code source html de la page
+    #}
+
+    <h1>Affichier quelquechose</h1>
+    Hello {{ fname }} <br>
+
+    <p>
+        Tous les prénoms du tableau :
+    </p>
+
+    <h1>Faire quelquechose</h1>
+    <h2>Structure itérative</h2>
+    <ul>
+        {% for prenom in fnames %}
+            <li>{{ prenom }}</li>
+        {% endfor %}
+    </ul>
+
+    <p>
+        Afficher un élément d'un tableau, grâce à un indice :
+        {{ fnames[1] }}
+    </p>
+
+    <h2>Structure conditionnelle</h2>
+
+    {% if (age >= 18) %}
+        Vous êtes majeur
+    {% else %}
+        Vous êtes mineur
+    {% endif %}
+
+    {% if age >= 0 and age <= 20 %}
+        <p>Vous avez entre 0 et 20 ans</p>
+    {% elseif age >= 21 and age <= 40 %}
+        <p>Vous avez entre 21 et 40 ans</p>
+    {% else %}
+        <p>Vous avez au moins 41 ans</p>
+    {% endif %}
+
+    {% if (age == 20 or age == 30) %}
+        <p>Vous avez 20 ou 30 ans</p>
+    {% endif %}
+{% endblock %}
+
+

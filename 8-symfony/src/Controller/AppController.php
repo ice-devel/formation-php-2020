@@ -3,34 +3,23 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AppController extends AbstractController
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/", name="app")
      */
     public function index()
     {
-        $response = new Response();
-        $response->setContent("Hello");
+        $firstname = "Bidule";
+        $firstnames = ['Toto', 'Tata', 'Titi'];
+        $age = 30;
 
-        return $response;
+        return $this->render('app/index.html.twig', [
+            'fname' => $firstname,
+            'fnames' => $firstnames,
+            'age' => $age
+        ]);
     }
-
-    /**
-     * @Route("/prout", name="prout")
-     */
-    public function prout()
-    {
-        $response = new Response();
-        $response->setContent("<html>
-                        <head></head>
-                        <body>Prout</body>
-                    </html>");
-
-        return $response;
-    }
-
 }
