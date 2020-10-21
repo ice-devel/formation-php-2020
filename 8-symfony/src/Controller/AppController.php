@@ -51,7 +51,9 @@ class AppController extends AbstractController
         // création du post
         $post = new Post();
         $post->setDescription("Le post créé par doctrine");
-        $post->setCreatedAt(new \DateTime());
+
+        // on a délégué au prePersist de post cette ligne
+        // $post->setCreatedAt(new \DateTime());
 
         // enregistrer en bdd
         $em = $this->getDoctrine()->getManager();

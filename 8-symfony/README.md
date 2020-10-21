@@ -101,7 +101,8 @@ Dans un controller, on a accès à $this->render(), elle prend deux paramètres 
 Ce sont les données qu'on veut persister, qui représente le côté "métier" de notre application. Par ex pour un site e-commerce :
 produit, commande, compte client, etc.
 
-1 - Création d'entité : on va modéliser nos entités par des classes d'objets, et on laisse Doctrine (ORM) faire les intéractions
+### 1 - Création d'entité
+On va modéliser nos entités par des classes d'objets, et on laisse Doctrine (ORM) faire les intéractions
 avec la base de données grâce à un mapping.
     1 - Configurer les accès à la base dans .env :
         DATABASE_URL
@@ -111,19 +112,19 @@ avec la base de données grâce à un mapping.
         php bin/console make:entity
     4 - Mettre à jour la bdd
         php bin/console doctrine:schema:update --force
-        
-2 - Utilisation des entités
+       
+### 2 - Utilisation des entités
 Dans un controller, on a besoin d'une entité : il faut utiliser Doctrine pour récupérer une entité
 ou l'instancier pour créer une nouvelle entité.
 
-Pour enregistrer une entité :
+#### Pour enregistrer une entité :
     - récupération du manager de doctrine
     - persist (prise en compte de l'objet par doctrine)
     - flush (envoi en bdd)
     - après un insert, l'id de l'objet est automatiquement setté
     
-Pour récupérer une ou des entités : on récupère des entités en passant par les Repository associés
-aux entités que l'on veut récup.
+#### Pour récupérer une ou des entités :
+    on récupère des entités en passant par les Repository associés aux entités que l'on veut récup.
     - findAll() : récupérer toutes les entités
     - find() : pour récupérer une entité par son id
     - findBy : récupérer des entités en ajoutant des conditions
@@ -133,6 +134,17 @@ Mais on peut aussi créer nos propres méthodes de récupération dans le reposi
 Quand on génère une entité avec la commande make, un repo est toujours automatiquement créé,
 et propose deux exemples en commentaires : un pour récup plusieurs entité,
 un autre pour récup une seul entité.
+
+#### Relation entre entité :
+    - OneToMany / ManyToOne
+    - ManyToMany
+    - OneToOne
+    
+#### Cycle de vie des entités
+6 événements lancés par Doctrine :
+    - avant et après un insert : prePersist / postPersist
+    - avant et après un update : preUpdate / postUpdate
+    - avant et après un delete : preRemove / postRemove
 
     
 

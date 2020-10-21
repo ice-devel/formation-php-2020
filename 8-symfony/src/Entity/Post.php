@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Post
 {
@@ -54,5 +55,23 @@ class Post
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    /*
+     * Cycle de vie : évenement déclenchés par doctrine
+     */
+    /**
+     * @ORM\PrePersist
+     */
+    public function choseAFaireAvantLinsert() {
+        $this->createdAt = new \DateTime();
+    }
+
+    /**
+     * @ORM\PostPersist
+     * et la même pour les 4 évenements restants
+     */
+    public function choseAFaireApresLinsert() {
+
     }
 }
