@@ -1,0 +1,21 @@
+{% extends 'base.html.twig'%}
+
+{% block body %}
+    <h1>Ajouter un post</h1>
+    <p style="color:green">{{ message }}</p>
+
+    {# la fonction form en twig permet d'afficher le html
+    correspondant au FormType qu'on a créé dans le controller #}
+    {#
+        {{ form(formPost) }}
+    #}
+
+    {# On peut découper l'affichage en précisant où commence le form
+     et où il termine : cela nous permet d'y inclure un submit #}
+    {{ form_start(formPost) }}
+        {{ form_row(formPost) }}
+        <input type="submit" value="Enregistrer le post" />
+    {{ form_end(formPost) }}
+{% endblock %}
+
+

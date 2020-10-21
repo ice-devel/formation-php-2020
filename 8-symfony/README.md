@@ -57,6 +57,7 @@ On ne crée pas un fichier par page, on va créer des routes qu'on va correspond
 
 ## 1 - Controllers
 Le controller est un point d'entrée, il faut définir une route pour chaque méthode.
+Le controller doit obligatoirement retourner un objet Response.
 
 Générer un controller en ligne de commande :
 php bin/console make:controller
@@ -66,6 +67,12 @@ L'annotation doit se trouve juste au dessus de la fonction qui sera appelée
 si l'url correspond.
 
 ## 1-bis Routing
+Un controller est appelé si le composant routing fait un lien entre l'URL et un pattern défini dans la route.
+
+Les patterns peuvent avoir des paramètres dynamiques :
+/edit-post/{id}
+Ici {id} est un paramètre d'URL dynamique, qu'on va pouvoir récupérer
+dans le controller (il va injecter dans la variable $id).
 
 ## 2 - Templates
 Par défaut, les templates sont générés avec twig dans symfony.
@@ -146,8 +153,34 @@ un autre pour récup une seul entité.
     - avant et après un update : preUpdate / postUpdate
     - avant et après un delete : preRemove / postRemove
 
-    
+## Formulaires
 
+Pour "hydrater" une entité, on passait avant par un formulaire html,
+puis on devait récupérer les valeurs une par une, les vérifier, instancier
+un objet et puis enfin setter ses propriétés grâce aux valeurs récupérées.
+
+Avec symfony, on va créer une classe Formulaire, que l'on va associer à une entité.
+    1- Créer une entité (console make:entity)
+    2- Créer le formulaire associé (console make:form)
+    3- Dans le controller on va instancier ce formulaire
+    (4-) Quand on a validé le formulaire, le composant Form aura mis l'entité automatiquement
+    5- Passer ce formulaire à la vue
+
+Dans le controller précisément, pour créer une entité :
+    1- Instanciation de l'entité
+    2- Création du form et association avec l'entité 
+    3- Est-ce que le form est soumis et valide ?
+    4- Si oui : enregistrement en bdd avec manager
+    5- Passer le FormView à la vue ($form->createView())
+    
+Exercice :
+Il faut maintenant créer les utilisateurs dans notre application.
+- Créer l'entité User (nom, email, isEnabled, createdAt, liste de Posts)
+- Mettre à jour la base
+- Créer le formulaire pour les users
+- Créer un controller USER
+    - une méthode pour afficher tous les users de la base
+    - une méthode pour créer un user via un formulaire
     
 
 

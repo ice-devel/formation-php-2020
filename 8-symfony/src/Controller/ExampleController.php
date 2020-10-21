@@ -95,4 +95,11 @@ class ExampleController extends AbstractController
 
         return new Response("<body></body>");
     }
+
+    /**
+     * @Route("/example-blog/{year}/{slug}", name="example_blog")
+     */
+    public function blog($year, $slug) {
+        return new Response($year." ".$slug);
+    }
 }
