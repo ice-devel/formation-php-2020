@@ -124,6 +124,16 @@ Pour enregistrer une entité :
     
 Pour récupérer une ou des entités : on récupère des entités en passant par les Repository associés
 aux entités que l'on veut récup.
+    - findAll() : récupérer toutes les entités
+    - find() : pour récupérer une entité par son id
+    - findBy : récupérer des entités en ajoutant des conditions
+    - findOneBy : récupérer une entité grâce à des conditions
+
+Mais on peut aussi créer nos propres méthodes de récupération dans le repository associé.
+Quand on génère une entité avec la commande make, un repo est toujours automatiquement créé,
+et propose deux exemples en commentaires : un pour récup plusieurs entité,
+un autre pour récup une seul entité.
+
     
 
     

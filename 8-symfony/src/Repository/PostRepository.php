@@ -47,4 +47,27 @@ class PostRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findPostsBeginWithLe()
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.description LIKE :val')
+            ->setParameter('val', "Le%")
+            ->orderBy('p.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findOnePostBeginWithLe()
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.description LIKE :val')
+            ->setParameter('val', "Le%")
+            ->orderBy('p.createdAt', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
 }

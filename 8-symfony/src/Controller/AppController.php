@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AppController extends AbstractController
@@ -36,7 +37,6 @@ class AppController extends AbstractController
         // récup tous les entités
         $posts = $postRepo->findAll();
 
-
         return $this->render('app/homepage.html.twig', [
             'post' => $post,
             'posts' => $posts
@@ -63,6 +63,53 @@ class AppController extends AbstractController
     }
 
     /**
+     * @Route("/edit-post", name="edit_post")
+     */
+    public function editPost()
+    {
+        // edition du post
+        $em = $this->getDoctrine()->getManager();
+        $post = $em->getRepository('App:Post')->find(1);
+
+        if ($post == null) {
+            throw new NotFoundHttpException();
+        }
+
+        /** @var Post $post */
+        $post->setDescription("Le post modifié par Doctrine");
+
+        // enregistrer en bdd
+        // pas obligé de faire un persist (car doctrine a récupéré cette entité, il la connait déjà)
+        // $em->persist($post);
+        $em->flush();
+
+        $message = "Le post ".$post->getId(). " a bien été modifié";
+        return new Response($message);
+    }
+
+    /**
+     * @Route("/delete-post", name="delete_post")
+     */
+    public function deletePost() {
+        // récupération de l'entité
+        $em = $this->getDoctrine()->getManager();
+        $post = $em->getRepository('App:Post')->find(2);
+
+        // suppression en bdd
+        $em->remove($post);
+        $em->flush();
+
+        // après la suppression d'une entité en bdd,
+        // la variable continue d'exister mais son ID est setté à NULL
+
+        // si on veut supprimer la variable :
+        unset($post);
+
+        $message = "Le post a bien été supprimé";
+        return new Response($message);
+    }
+
+    /**
      * @Route("/twig", name="twig")
      */
     public function twig()
@@ -71,10 +118,38 @@ class AppController extends AbstractController
         $firstnames = ['Toto', 'Tata', 'Titi'];
         $age = 30;
 
+        $em = $this->getDoctrine()->getManager();
+
+        // findBy : mettre des conditions pour récupérer des entités. On peut mettre plusieurs
+        // conditions liés par des AND
+        $posts = $em->getRepository('App:Post')->findBy([
+            'description' => 'Le post créé par doctrine'
+        ]);
+
+        // findOneBy : condition pour récupérer une seule entité. Attention si plusieurs
+        // entités correspondent en bdd, seule la première sera renvoyé
+        $post = $em->getRepository('App:Post')->findOneBy([
+            'description' => 'Le post créé par doctrine',
+            'id' => 3,
+        ]);
+
+        // findOneBy : on peut mettre des OR pour une seule propriété : il suffit de passer
+        // un tableau de valeur plutôt qu'une valeur
+        $post2 = $em->getRepository('App:Post')->findOneBy([
+            'description' => 'Le post créé par doctrine',
+            'id' => [1,4,6],
+        ]);
+
+        // récupérer les posts qui commence par "le"
+        $postsBeginWithLe = $em->getRepository('App:Post')->findPostsBeginWithLe();
+        $postBeginWithLe = $em->getRepository('App:Post')->findOnePostBeginWithLe();
+
         return $this->render('app/index.html.twig', [
             'fname' => $firstname,
             'fnames' => $firstnames,
-            'age' => $age
+            'age' => $age,
+            'posts' => $posts,
+            'post' => $post
         ]);
     }
 }

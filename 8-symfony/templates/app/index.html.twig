@@ -61,6 +61,18 @@
     {% if (age == 20 or age == 30) %}
         <p>Vous avez 20 ou 30 ans</p>
     {% endif %}
+
+    {% for p in posts %}
+        <p>
+            {{ p.description }}<br>
+            {{ p.createdAt | date('d/m/Y H:i:s') }}
+        </p>
+    {% endfor %}
+
+    <p>
+        {{ post.description }}<br>
+        {{ post.createdAt | date('d/m/Y H:i:s') }}
+    </p>
 {% endblock %}
 
 
