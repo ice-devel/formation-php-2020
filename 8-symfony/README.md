@@ -178,6 +178,7 @@ Il faut maintenant créer les utilisateurs dans notre application.
 - Créer l'entité User (nom, email, isEnabled, createdAt, liste de Posts)
 - Mettre à jour la base
 - Créer le formulaire pour les users
+  (sans date de création ni qqch concernant les posts)
 - Créer un controller USER
     - une méthode pour afficher tous les users de la base
     - une méthode pour créer un user via un formulaire
