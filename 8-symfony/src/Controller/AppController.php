@@ -49,18 +49,9 @@ class AppController extends AbstractController
         $posts = $postRepo->findBy([], ['createdAt' => 'DESC']);
 
         $post = new Post();
-        $form = $this->createForm(PostType::class, $post);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user = $em->getRepository('App:User')->find(1);
-            $post->setUser($user);
-            $em->persist($post);
-            $em->flush();
-            $this->addFlash('success', 'Post bien créé');
-            return $this->redirectToRoute('homepage');
-        }
+        $form = $this->createForm(PostType::class, $post, [
+            'action' => $this->generateUrl('new_post_confirm')
+        ]);
 
         return $this->render('app/homepage.html.twig', [
             //'post' => $post,
@@ -72,7 +63,7 @@ class AppController extends AbstractController
     /**
      * @Route("/new-post", name="new_post")
      * Pour injecter l'objet Request de symfony,
-     * il suuffit de créer un paramètre dans la fonction
+     * il suffit de créer un paramètre dans la fonction
      * et de le type : Request
      * Symfony\Component\HttpFoundation\Request
      */
@@ -88,6 +79,20 @@ class AppController extends AbstractController
 
         // en passant par un objet form :
         $post = new Post();
+        $form = $this->createForm(PostType::class, $post, [
+            'action' => $this->generateUrl('new_post_confirm')
+        ]);
+
+        return $this->render('app/post_new.html.twig', [
+            'formPost' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/new-post/confirmation", name="new_post_confirm")
+     */
+    public function newPostConfirm(Request $request) {
+        $post = new Post();
         $form = $this->createForm(PostType::class, $post);
 
         // on dit au formulaire d'aller dans la requête HTTP les informations
@@ -96,10 +101,9 @@ class AppController extends AbstractController
         $form->handleRequest($request);
 
         // vérifier le formulaire a été soumis
-        $message = "";
+        // est-il valide ce form ?
         if ($form->isSubmitted()) {
-            // est-il valide ce form ?
-           if ($form->isValid()) {
+            if ($form->isValid()) {
                 // enregistrer en bdd
                 $em = $this->getDoctrine()->getManager();
 
@@ -110,19 +114,17 @@ class AppController extends AbstractController
 
                 $em->persist($post);
                 $em->flush();
-                $message = "Post bien créé";
-           }
+                $this->addFlash('success', 'Post bien créé');
+                return $this->redirectToRoute('homepage');
+            }
+            else {
+                $this->addFlash('danger', 'Ton post doit avoir min. 20 caractères');
+                $referer = $request->headers->get('referer');
+                return $this->redirect($referer);
+            }
         }
 
-        /*
-        $message = "Le post ".$post->getId(). " a bien été enregistré";
-        return new Response($message);
-        */
-
-        return $this->render('app/post_new.html.twig', [
-            'formPost' => $form->createView(),
-            'message' => $message
-        ]);
+        return new Response("T'avais pas le droit de visiter cette page directement.");
     }
 
     /**

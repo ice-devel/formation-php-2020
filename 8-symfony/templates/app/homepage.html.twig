@@ -14,11 +14,10 @@
 
     <div class="container">
          <div class="col-6 offset-3" style="border:1px solid;">
-             {{ form_start(form) }}
-                 {{ form_row(form) }}
-
-                 <input type="submit" />
-             {{ form_end(form) }}
+             {# on passe à ce template la variable form en la mettant
+             dans la variable formPost, car dans le fichier inclus ci-dessous,
+              il faut formPost et non form#}
+             {% include 'app/_form_new_post.html.twig' with {'formPost': form} %}
          </div>
 
         <div class="col-6 offset-3" style="border:1px solid;">

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
@@ -20,6 +21,7 @@ class Post
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(min=20)
      */
     private $description;
 

@@ -2,7 +2,7 @@
 
 {% block body %}
     <h1>Ajouter un post</h1>
-    <p style="color:green">{{ message }}</p>
+    <p style="color:green"></p>
 
     {# la fonction form en twig permet d'afficher le html
     correspondant au FormType qu'on a créé dans le controller #}
@@ -35,23 +35,7 @@
     {#
         On peut découper les champs élément par éléments
     #}
-    {{ form_start(formPost) }}
-        <div class="post_description_input">
-            {# on peut ajouter des options comme par exemple on peut les attributs HTML grâce
-            à l'option 'attr' #}
-            {{ form_widget(formPost.description, {'attr': {'class': 'textarea-post', 'placeholder': 'Tapez votre post'}}) }}
-        </div>
-
-        <div class="post_description_label">
-            {{ form_label(formPost.description) }}
-        </div>
-
-        <div class="post_description_errors">
-            {{ form_errors(formPost.description) }}
-        </div>
-
-        <input type="submit" value="Enregistrer le post" />
-    {{ form_end(formPost) }}
+    {% include 'app/_form_new_post.html.twig' %}
 {% endblock %}
 
 
