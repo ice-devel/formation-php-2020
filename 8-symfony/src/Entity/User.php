@@ -6,9 +6,13 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity( fields="email",
+ *     message="Email déjà utilisé pouet")
  */
 class User
 {
@@ -21,11 +25,14 @@ class User
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotNull(message="VOUS DEVEZ saisir votre nom, is it clear ?")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=150)
+     * @Assert\NotNull()
+     * @Assert\Email()
      */
     private $email;
 

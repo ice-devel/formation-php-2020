@@ -203,6 +203,21 @@ Il faut maintenant créer les utilisateurs dans notre application.
     - une méthode pour afficher tous les users de la base
     - une méthode pour créer un user via un formulaire
 
+## Validation des entités
+Il existe un service Validator dans symfony qui permet de valider une entité
+(est-ce les données dans les propriétés de l'objets sont valides ou non)
+Le service form.factory (celui qui permet de créer les formulaires), appelle
+automatiquement le validator quand on fait
+``` $form->handleRequest($request) ```
+
+Il suffit de configurer nos entités avec les contraintes directement
+dans les annotations (obligatoire, unique, regex) :
+https://symfony.com/doc/current/reference/constraints.html
+
+Si une contrainte n'existe pas, vous pouvez également créer votre propre
+contrainte :
+https://symfony.com/doc/current/validation/custom_constraint.html
+
 ## Messages flash
 Les messages flash sont des messages destinés à n'être affichés qu'une seule fois. Ils sont pratiques lors du CRUD
 des entités. Un message flash et un message mis en session, et supprimé de la session automatiquement dès lors
@@ -224,6 +239,8 @@ Afficher un message dans un template
     {% endfor %}
 {% endfor %}
 ```
+
+
 
 
     

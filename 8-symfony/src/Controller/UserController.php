@@ -34,6 +34,8 @@ class UserController extends AbstractController
        $form->handleRequest($request);
 
        if ($form->isSubmitted()) {
+           // $form->isValid vérifie si le formulaire est valide :
+           // ça veut qu'on checke les validations de l'entité
            if ($form->isValid()) {
                $em = $this->getDoctrine()->getManager();
                $em->persist($user);
