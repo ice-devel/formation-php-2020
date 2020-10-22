@@ -240,7 +240,17 @@ Afficher un message dans un template
 {% endfor %}
 ```
 
+Exercice :
+Modifier la page homepage pour afficher les posts du plus récent au plus vieux
+Ajouter dans le template les informations concernant le user auquel appartient le post
+PostRepository : comment créer une requête qui trie les enregistrements ?
+I dont know ? Then :
+You to Google : symfony doctrine order by please
+Google : it's easy, you have to code this bitch :
 
+Puis au dessus de la liste des postes, afficher le formulaire de création de post
+Codez la validation côté du serveur pour les posts :
+- Description : au moins 20 caractères
 
 
     

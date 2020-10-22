@@ -70,4 +70,13 @@ class PostRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
             ;
     }
+
+    public function findAllByInversedOrder()
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

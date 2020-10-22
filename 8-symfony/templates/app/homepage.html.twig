@@ -12,15 +12,29 @@
     </div>
     #}
 
-    {% for p in posts %}
-        <div>
-            <p>
-                {{ p.description }}
-                <br>
-                <span>le {{ p.createdAt | date('d/m/Y à H:i:s') }}</span>
-            </p>
+    <div class="container">
+         <div class="col-6 offset-3" style="border:1px solid;">
+             {{ form_start(form) }}
+                 {{ form_row(form) }}
+
+                 <input type="submit" />
+             {{ form_end(form) }}
+         </div>
+
+        <div class="col-6 offset-3" style="border:1px solid;">
+            {% for p in posts %}
+                <div>
+                    <p>
+                        {{ p.description }}
+                        <br>
+                        <span>le {{ p.createdAt | date('d/m/Y à H:i:s') }}</span>
+                    </p>
+                </div>
+            {% endfor %}
+
         </div>
-    {% endfor %}
+    </div>
+
 {% endblock %}
 
 

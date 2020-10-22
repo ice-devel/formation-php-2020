@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Form\PostType;
+use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,7 @@ class AppController extends AbstractController
     /**
      * @Route("/", name="homepage")
      */
-    public function index()
+    public function index(Request $request)
     {
         /*
         $post = new Post();
@@ -37,13 +38,34 @@ class AppController extends AbstractController
         // récupération de tous les posts en bdd
         $em = $this->getDoctrine()->getManager();
         // récupérer le repository associé à l'entité
+
         $postRepo = $em->getRepository('App:Post');
         // récup tous les entités
-        $posts = $postRepo->findAll();
+        //$posts = $postRepo->findAll();
+        // récup tous les posts du plus récent au plus vieux
+        // $posts = $postRepo->findAllByInversedOrder();
+
+        // ou encore avec l'une des méthodes fournies par le repo
+        $posts = $postRepo->findBy([], ['createdAt' => 'DESC']);
+
+        $post = new Post();
+        $form = $this->createForm(PostType::class, $post);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $em->getRepository('App:User')->find(1);
+            $post->setUser($user);
+            $em->persist($post);
+            $em->flush();
+            $this->addFlash('success', 'Post bien créé');
+            return $this->redirectToRoute('homepage');
+        }
 
         return $this->render('app/homepage.html.twig', [
             //'post' => $post,
-            'posts' => $posts
+            'posts' => $posts,
+            'form' => $form->createView()
         ]);
     }
 
