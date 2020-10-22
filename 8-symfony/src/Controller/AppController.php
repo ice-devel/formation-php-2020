@@ -76,11 +76,17 @@ class AppController extends AbstractController
         if ($form->isSubmitted()) {
             // est-il valide ce form ?
            if ($form->isValid()) {
-               // enregistrer en bdd
-               $em = $this->getDoctrine()->getManager();
-               $em->persist($post);
-               $em->flush();
-               $message = "Post bien créé";
+                // enregistrer en bdd
+                $em = $this->getDoctrine()->getManager();
+
+                // associer un utilisateur au post : temporaire
+                // évidemment on va pas faire ça en vrai
+                $user = $em->getRepository('App:User')->find(1);
+                $post->setUser($user);
+
+                $em->persist($post);
+                $em->flush();
+                $message = "Post bien créé";
            }
         }
 
