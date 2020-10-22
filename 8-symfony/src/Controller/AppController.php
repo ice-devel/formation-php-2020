@@ -17,9 +17,11 @@ class AppController extends AbstractController
      */
     public function index()
     {
+        /*
         $post = new Post();
         $post->setDescription("Mon premier post dynamique");
         $post->setCreatedAt(new \DateTime());
+        */
 
         /*
         $post1 = new Post();
@@ -40,7 +42,7 @@ class AppController extends AbstractController
         $posts = $postRepo->findAll();
 
         return $this->render('app/homepage.html.twig', [
-            'post' => $post,
+            //'post' => $post,
             'posts' => $posts
         ]);
     }
