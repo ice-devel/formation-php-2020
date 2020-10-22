@@ -8,7 +8,13 @@
             <tr>
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.isEnabled }}</td>
+                <td>Compte
+                    {% if user.isEnabled %}
+                        activé
+                    {% else %}
+                        désactivé
+                    {% endif %}
+                </td>
             </tr>
         {% endfor %}
     </table>

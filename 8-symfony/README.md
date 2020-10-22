@@ -172,7 +172,27 @@ Dans le controller précisément, pour créer une entité :
     3- Est-ce que le form est soumis et valide ?
     4- Si oui : enregistrement en bdd avec manager
     5- Passer le FormView à la vue ($form->createView())
-    
+
+### Afficher le formulaire dans un template
+1 - Afficher en une fois :
+```
+    {{ form(formPost) }}
+```
+2 - Afficher champs par champs
+```
+    {{ form_row(formPost.description) }}
+```
+3- Afficher élément de champ par élément de champ (widget, label, errors)
+```
+    {{ form_errors(formPost.description) }}
+    {{ form_widget(formPost.description) }}
+    {{ form_label(formPost.description) }}
+```
+4- Personnaliser chaque élément grâce à des options
+```
+    {{ form_widget(formPost.description, {'attr': {'class': 'la_classe_html_du_widget'}}) }}
+```
+
 Exercice :
 Il faut maintenant créer les utilisateurs dans notre application.
 - Créer l'entité User (nom, email, isEnabled, createdAt, liste de Posts)
@@ -182,8 +202,28 @@ Il faut maintenant créer les utilisateurs dans notre application.
 - Créer un controller USER
     - une méthode pour afficher tous les users de la base
     - une méthode pour créer un user via un formulaire
-    
 
+## Messages flash
+Les messages flash sont des messages destinés à n'être affichés qu'une seule fois. Ils sont pratiques lors du CRUD
+des entités. Un message flash et un message mis en session, et supprimé de la session automatiquement dès lors
+qu'il a été affiché une fois.
+
+Créer un message flash dans un controller
+
+```
+$this->addFlash("type", "le message à afficher");
+```
+
+Afficher un message dans un template
+```
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }}" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+```
 
 
     

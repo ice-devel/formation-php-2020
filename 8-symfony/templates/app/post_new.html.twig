@@ -12,8 +12,44 @@
 
     {# On peut découper l'affichage en précisant où commence le form
      et où il termine : cela nous permet d'y inclure un submit #}
+    {#
     {{ form_start(formPost) }}
         {{ form_row(formPost) }}
+        <input type="submit" value="Enregistrer le post" />
+    {{ form_end(formPost) }}
+    #}
+
+    {# On peut découper le formulaire champ par champ #}
+
+    {#
+    {{ form_start(formPost) }}
+        <div class="post_description">
+            {{ form_row(formPost.description) }}
+        </div>
+
+        {{ form_row(formPost.createdAt) }}
+        <input type="submit" value="Enregistrer le post" />
+    {{ form_end(formPost) }}
+    #}
+
+    {#
+        On peut découper les champs élément par éléments
+    #}
+    {{ form_start(formPost) }}
+        <div class="post_description_input">
+            {# on peut ajouter des options comme par exemple on peut les attributs HTML grâce
+            à l'option 'attr' #}
+            {{ form_widget(formPost.description, {'attr': {'class': 'textarea-post', 'placeholder': 'Tapez votre post'}}) }}
+        </div>
+
+        <div class="post_description_label">
+            {{ form_label(formPost.description) }}
+        </div>
+
+        <div class="post_description_errors">
+            {{ form_errors(formPost.description) }}
+        </div>
+
         <input type="submit" value="Enregistrer le post" />
     {{ form_end(formPost) }}
 {% endblock %}

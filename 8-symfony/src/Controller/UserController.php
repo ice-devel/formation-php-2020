@@ -38,6 +38,13 @@ class UserController extends AbstractController
                $em = $this->getDoctrine()->getManager();
                $em->persist($user);
                $em->flush();
+
+               // message flash : passer un message d'une page à une autre
+               $this->addFlash('success', 'Merci, inscription prise en compte.');
+
+               // rediriger pour éviter d'afficher le formulaire à nouveau
+               // rempli avec les mêmes informations
+               return $this->redirectToRoute('user');
            }
        }
 
