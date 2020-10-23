@@ -267,3 +267,6 @@ composer require security
 
 Dans symfony, l'authentification et les sessions sont gérés par un composant
 qu'il va falloir configurer : la config se trouve dans le fichier config/packages/security
+
+TOUT EST EXPLIQUE ICI, LISEZ AS, READ IT :
+https://symfony.com/doc/current/security.html

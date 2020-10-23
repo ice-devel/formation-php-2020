@@ -31,7 +31,7 @@ class User implements UserInterface
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=150)
+     * @ORM\Column(type="string", length=150, unique=true)
      * @Assert\NotNull()
      * @Assert\Email()
      */
