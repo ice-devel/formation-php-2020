@@ -6,6 +6,7 @@ use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -114,13 +115,27 @@ class AppController extends AbstractController
 
                 $em->persist($post);
                 $em->flush();
-                $this->addFlash('success', 'Post bien créé');
-                return $this->redirectToRoute('homepage');
+
+                // je crée le html correspondant au nouveau post
+                // pour le renvoyer au navigateur
+                $viewPost = $this->renderView('app/_one_post.html.twig', [
+                    'p' => $post
+                ]);
+
+                // on répond au navigateur : on répond en json pour pouvoir plusieurs
+                // informations
+                return new JsonResponse([
+                    'code' => 0,
+                    'template' => $viewPost
+                ]);
             }
             else {
-                $this->addFlash('danger', 'Ton post doit avoir min. 20 caractères');
-                $referer = $request->headers->get('referer');
-                return $this->redirect($referer);
+                //$this->addFlash('danger', 'Ton post doit avoir min. 20 caractères');
+                //$referer = $request->headers->get('referer');
+                //return $this->redirect($referer);
+                return new JsonResponse([
+                    'code' => -1
+                ]);
             }
         }
 

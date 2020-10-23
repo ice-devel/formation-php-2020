@@ -20,10 +20,11 @@
              {% include 'app/_form_new_post.html.twig' with {'formPost': form} %}
          </div>
 
-        <div class="col-6 offset-3" style="border:1px solid;">
+        <div id="list-posts" class="col-6 offset-3" style="border:1px solid;">
             {% for p in posts %}
                 <div>
                     <p>
+                        {{ p.user.name }} :<br>
                         {{ p.description }}
                         <br>
                         <span>le {{ p.createdAt | date('d/m/Y à H:i:s') }}</span>
