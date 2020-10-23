@@ -203,7 +203,7 @@ Il faut maintenant créer les utilisateurs dans notre application.
     - une méthode pour afficher tous les users de la base
     - une méthode pour créer un user via un formulaire
 
-## Validation des entités
+### Validation des entités
 Il existe un service Validator dans symfony qui permet de valider une entité
 (est-ce les données dans les propriétés de l'objets sont valides ou non)
 Le service form.factory (celui qui permet de créer les formulaires), appelle
@@ -218,7 +218,7 @@ Si une contrainte n'existe pas, vous pouvez également créer votre propre
 contrainte :
 https://symfony.com/doc/current/validation/custom_constraint.html
 
-## Messages flash
+### Messages flash
 Les messages flash sont des messages destinés à n'être affichés qu'une seule fois. Ils sont pratiques lors du CRUD
 des entités. Un message flash et un message mis en session, et supprimé de la session automatiquement dès lors
 qu'il a été affiché une fois.
@@ -252,6 +252,18 @@ Puis au dessus de la liste des postes, afficher le formulaire de création de po
 Codez la validation côté du serveur pour les posts :
 - Description : au moins 20 caractères
 
+### Requête Ajax
+Une requête ajax est une requête HTTP qui s'exécute en arrière-plan : il n'y a pas de rechargement de page pendant que
+l'on contacte le serveur.
+Ce qui permet d'avoir une application dynamique. L'utilisateur peut continuer d'utiliser le site ou l'appli pendant que l'on
+envoie ou demande des choses au serveur.
 
-    
+On utilise javascript pour faire ceci. Il faut envoyer une requête puis écouter "onreadystatechange" pour lancer une fonction
+JS quand le serveur aura fini de traiter la requête et obtenir sa réponse.
 
+ 
+## Authentification
+composer require security
+
+Dans symfony, l'authentification et les sessions sont gérés par un composant
+qu'il va falloir configurer : la config se trouve dans le fichier config/packages/security
