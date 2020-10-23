@@ -133,8 +133,13 @@ class AppController extends AbstractController
                 //$this->addFlash('danger', 'Ton post doit avoir min. 20 caractères');
                 //$referer = $request->headers->get('referer');
                 //return $this->redirect($referer);
+                $viewForm = $this->renderView('app/_form_new_post.html.twig', [
+                    'formPost' => $form->createView()
+                ]);
+
                 return new JsonResponse([
-                    'code' => -1
+                    'code' => -1,
+                    'template' => $viewForm
                 ]);
             }
         }

@@ -2,17 +2,6 @@ console.log("test : fichier js bien chargé");
 
 // requête ajax / xml httprequest
 // envoyer une requête http sans recharger la page
-function ajax() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-           // this.responseText;
-        }
-    };
-
-    xhttp.open("GET", "ajax_info.txt", true);
-    xhttp.send();
-}
 
 var formPost = document.querySelector('form[name=post]');
 formPost.addEventListener('submit', function(event) {
@@ -51,12 +40,17 @@ formPost.addEventListener('submit', function(event) {
                }
                // on est pas sur la page timeline
                else {
-                   alert('Le post a bien été ajouté mais il faudrait rafraichir l\'interface de cette page')
+                   alert('Le post a bien été ajouté mais il faudrait rafraichir l\'interface de cette page');
+                  // par exemple : rediriger vers la page d'accueil avec la liste des posts
+                   document.location = "/";
                }
 
             }
             else {
-                alert('Erreur dans le formulaire')
+                alert('Erreur dans le formulaire');
+                let newFormPost = document.createElement('form');
+                newFormPost.innerHTML = response.template;
+                formPost.replaceWith(newFormPost);
             }
         }
     };
