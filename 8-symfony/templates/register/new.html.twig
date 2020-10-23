@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+    <h1>Création d'un user</h1>
+
+    {# appliquer un theme inclus dans symfony pour ce formulaire : #}
+
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+    {{ form_start(form) }}
+        {{ form_row(form) }}
+
+        <input type="submit" />
+    {{ form_end(form) }}
+{% endblock %}

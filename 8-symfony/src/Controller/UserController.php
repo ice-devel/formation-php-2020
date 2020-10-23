@@ -3,57 +3,97 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\UserType;
+use App\Form\User1Type;
+use App\Repository\UserRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Préfixer toutes les URLS de ce controller :
+ * @Route("/user")
+ *
+ * Autoriser les pages de ce controller uniquement aux admins :
+ * @IsGranted("ROLE_ADMIN")
+ */
 class UserController extends AbstractController
 {
     /**
-     * @Route("/user", name="user")
-     * @IsGranted("ROLE_ADMIN")
+     * @Route("/", name="user_index", methods={"GET"})
      */
-    public function index()
+    public function index(UserRepository $userRepository): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository('App:User')->findAll();
-
         return $this->render('user/index.html.twig', [
-            'users' => $users,
+            'users' => $userRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/user/create", name="user_create")
+     * @Route("/new", name="user_new", methods={"GET","POST"})
      */
-    public function create(Request $request)
+    public function new(Request $request): Response
     {
-       $user = new User();
-       $form = $this->createForm(UserType::class, $user);
+        $user = new User();
+        $form = $this->createForm(User1Type::class, $user);
+        $form->handleRequest($request);
 
-       $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-       if ($form->isSubmitted()) {
-           // $form->isValid vérifie si le formulaire est valide :
-           // ça veut qu'on checke les validations de l'entité
-           if ($form->isValid()) {
-               $em = $this->getDoctrine()->getManager();
-               $em->persist($user);
-               $em->flush();
-
-               // message flash : passer un message d'une page à une autre
-               $this->addFlash('success', 'Merci, inscription prise en compte.');
-
-               // rediriger pour éviter d'afficher le formulaire à nouveau
-               // rempli avec les mêmes informations
-               return $this->redirectToRoute('user');
-           }
-       }
+            return $this->redirectToRoute('user_index');
+        }
 
         return $this->render('user/new.html.twig', [
+            'user' => $user,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/{id}", name="user_show", methods={"GET"})
+     */
+    public function show(User $user): Response
+    {
+        return $this->render('user/show.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, User $user): Response
+    {
+        $form = $this->createForm(User1Type::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('user_index');
+        }
+
+        return $this->render('user/edit.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="user_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, User $user): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($user);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('user_index');
     }
 }

@@ -17,6 +17,11 @@
             {% endfor %}
         {% endfor %}
 
+        {# si on est admin affichons un lien vers la liste des users #}
+        {% if is_granted("ROLE_ADMIN") %}
+            <a href="{{ path('user_index') }}">Liste des users</a>
+        {% endif %}
+
         {% block body %}{% endblock %}
         {% block javascripts %}
             <script src="https://code.jquery.com/jquery-3.5.1.min.js"

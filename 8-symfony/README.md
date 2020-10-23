@@ -261,12 +261,50 @@ envoie ou demande des choses au serveur.
 On utilise javascript pour faire ceci. Il faut envoyer une requête puis écouter "onreadystatechange" pour lancer une fonction
 JS quand le serveur aura fini de traiter la requête et obtenir sa réponse.
 
+### Génerer un crud
+Il existe une commande dans le MakerBundle pour générer un crud entier sur une entité
+(controller, template, form, route) :
+```php bin/console make:crud```
  
-## Authentification
+## Sécurité / Authentification
 composer require security
 
-Dans symfony, l'authentification et les sessions sont gérés par un composant
+Dans symfony, l'authentification et les sessions utilisateurs sont gérées par un composant
 qu'il va falloir configurer : la config se trouve dans le fichier config/packages/security
 
 TOUT EST EXPLIQUE ICI, LISEZ AS, READ IT :
 https://symfony.com/doc/current/security.html
+
+La tâche est facilitée grâce à deux commandes. Il faut créer une entité capable d'être connectée
+(un User) et un système d'authentification (Guard authenticator).
+```php bin/console make:user```
+```php bin/console make:auth```
+
+Il faut ensuite configurer dans le fichier security.yaml les routes que l'on veut protéger.
+On peut protéger toutes les routes du site, ou par exemple uniquement le back-office :
+on fait ceci en configurant la clé "pattern" du firewall.
+
+On peut ensuite décider route par route dans la section "access_control" si il
+faut un rôle particulier pour accéder à une page en particulier.
+
+On peut aussi vérifier si l'accès est autorisé grâce aux annotations @IsGranted
+pour un controller en entier, ou pour juste certaines méthodes dans un controller.
+Il faut installer :
+```composer required sensio/framework-extra-bundle```
+
+### Accéder à l'utilisateur connecté
+#### Dans un controller :
+```$this->getUser()```
+
+#### Dans un template :
+```{{ app.user }}```
+
+### Vérifier les rôles du user connecté 
+#### Dans un controller
+```$this->isGranted("ROLE_A_TESTER")```
+
+### Dans un template
+``` {% if is_granted("ROLE_A_TESTER")```
+
+
+Service, Form relation entre entité, Voter

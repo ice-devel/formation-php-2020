@@ -1,17 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}New User{% endblock %}
 
 {% block body %}
-    <h1>Création d'un user</h1>
+    <h1>Create new User</h1>
 
-    {# appliquer un theme inclus dans symfony pour ce formulaire : #}
+    {{ include('user/_form.html.twig') }}
 
-    {% form_theme form 'bootstrap_4_layout.html.twig' %}
-
-    {{ form_start(form) }}
-        {{ form_row(form) }}
-
-        <input type="submit" />
-    {{ form_end(form) }}
+    <a href="{{ path('user_index') }}">back to list</a>
 {% endblock %}

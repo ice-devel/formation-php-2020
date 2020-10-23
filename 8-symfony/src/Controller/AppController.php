@@ -108,10 +108,16 @@ class AppController extends AbstractController
                 // enregistrer en bdd
                 $em = $this->getDoctrine()->getManager();
 
-                // associer un utilisateur au post : temporaire
-                // évidemment on va pas faire ça en vrai
-                $user = $em->getRepository('App:User')->find(1);
-                $post->setUser($user);
+                // récupérer l'utilisateur qui est connecté :
+                $post->setUser($this->getUser());
+
+                // est-ce que on active le post ? si on est admin oui, sinon non
+                if ($this->isGranted('ROLE_ADMIN')) {
+                    $post->setIsEnabled(true);
+                }
+                else {
+                    $post->setIsEnabled(false);
+                }
 
                 $em->persist($post);
                 $em->flush();

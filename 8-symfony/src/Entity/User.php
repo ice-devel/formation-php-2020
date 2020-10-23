@@ -43,7 +43,7 @@ class User implements UserInterface
     private $isEnabled;
 
     /**
-     * @ORM\OneToMany(targetEntity=Post::class, mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Post::class, mappedBy="register", orphanRemoval=true)
      */
     private $posts;
 
@@ -156,7 +156,7 @@ class User implements UserInterface
 
 
     /**
-     * A visual identifier that represents this user.
+     * A visual identifier that represents this register.
      *
      * @see UserInterface
      */
@@ -171,7 +171,7 @@ class User implements UserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
+        // guarantee every register at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
@@ -212,7 +212,7 @@ class User implements UserInterface
      */
     public function eraseCredentials()
     {
-        // If you store any temporary, sensitive data on the user, clear it here
+        // If you store any temporary, sensitive data on the register, clear it here
         // $this->plainPassword = null;
     }
 }
