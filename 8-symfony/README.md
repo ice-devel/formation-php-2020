@@ -341,4 +341,4 @@ Le container permet :
     
 Config form, Form array (rôles user), Form relation entre entité
 
-Migration sql, Traduction, Voter, .env, déploiement, tests auto, design pattern
+Migration sql, Traduction, Voter, .env, déploiement, tests auto, design pattern, bundle connus

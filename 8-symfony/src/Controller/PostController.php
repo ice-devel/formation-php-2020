@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Form\Post1Type;
+use App\Manager\PostManager;
 use App\Repository\PostRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,16 +31,15 @@ class PostController extends AbstractController
     /**
      * @Route("/new", name="post_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, PostManager $postManager): Response
     {
         $post = new Post();
         $form = $this->createForm(Post1Type::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($post);
-            $entityManager->flush();
+            $post->getUser()->setPlainPassword($form->get('user')->get('plainPassword')->getData());
+            $postManager->insert($post);
 
             return $this->redirectToRoute('post_index');
         }
