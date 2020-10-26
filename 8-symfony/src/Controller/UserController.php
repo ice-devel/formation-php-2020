@@ -21,6 +21,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
+    private $userManager;
+
+    public function __construct(UserManager $userManager)
+    {
+        $this->userManager = $userManager;
+    }
+
     /**
      * @Route("/", name="user_index", methods={"GET"})
      */
@@ -34,14 +41,15 @@ class UserController extends AbstractController
     /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
      */
-    public function new(Request $request, UserManager $userManager): Response
+    public function new(Request $request): Response
     {
         $user = new User();
         $form = $this->createForm(User1Type::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userManager->insert($user);
+            $user->setPlainPassword($form->get('plainPassword')->getData());
+            $this->userManager->insert($user);
 
             return $this->redirectToRoute('user_index');
         }

@@ -27,7 +27,9 @@ class RegisterController extends AbstractController
            // $form->isValid vérifie si le formulaire est valide :
            // ça veut qu'on checke les validations de l'entité
            if ($form->isValid()) {
-               $userManager->insert($user, false);
+               $user->setPlainPassword($form->get('plainPassword')->getData());
+               $confirmOrNot = $form->get('mailConfirmOrNot')->getData();
+               $userManager->insert($user);
 
                // message flash : passer un message d'une page à une autre
                $this->addFlash('success', 'Merci, inscription prise en compte.');

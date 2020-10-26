@@ -63,6 +63,11 @@ class User implements UserInterface
      */
     private $password;
 
+    /*
+     * Non mapped
+     */
+    private $plainPassword;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -214,5 +219,13 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the register, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getPlainPassword() {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($plainPassword) {
+        $this->plainPassword = $plainPassword;
     }
 }

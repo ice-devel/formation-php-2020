@@ -265,6 +265,12 @@ JS quand le serveur aura fini de traiter la requête et obtenir sa réponse.
 Il existe une commande dans le MakerBundle pour générer un crud entier sur une entité
 (controller, template, form, route) :
 ```php bin/console make:crud```
+
+### Champs non mapped
+On peut insérer des champs dans un formulaire même si ce ne sont pas des propriétés mappées (qui ont une équivalence en bdd).
+Il suffit de renseigner ```['mapped' => false]``` dans les options du champ de formulaire.
+
+On l'a utilisé par exemple dans le UserType pour le plainPassword.
  
 ## Sécurité / Authentification
 composer require security
@@ -311,9 +317,6 @@ Il faut installer :
 composer update
 php bin/console doctrine:schema:update --force
 
-Service, Form array (rôles user), Form relation entre entité, Voter
-.env, déploiement, tests auto, design pattern
-
 ## Services
 
 Un service est une classe qui offre une fonctionnalité particulière.
@@ -324,3 +327,7 @@ Le service est maintenant accessible via le container.
 Le container permet :
     - d'instancier les services pour nous (et s'il est déjà instancié, il retourne l'instance existante)
     - de gérer les dépendances à d'autres services pour nous (qui seront passés dans le controller)
+    
+Config form, Form array (rôles user), Form relation entre entité
+
+Voter, .env, déploiement, tests auto, design pattern
