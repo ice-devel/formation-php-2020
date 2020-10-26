@@ -307,4 +307,20 @@ Il faut installer :
 ``` {% if is_granted("ROLE_A_TESTER")```
 
 
-Service, Form relation entre entité, Voter
+## Après un GIT PULL
+composer update
+php bin/console doctrine:schema:update --force
+
+Service, Form array (rôles user), Form relation entre entité, Voter
+.env, déploiement, tests auto, design pattern
+
+## Services
+
+Un service est une classe qui offre une fonctionnalité particulière.
+On découpe nos fonctionnalités dans des classes (single responsibility principle), et on 
+va les charger dans un container de service.
+
+Le service est maintenant accessible via le container.
+Le container permet :
+    - d'instancier les services pour nous (et s'il est déjà instancié, il retourne l'instance existante)
+    - de gérer les dépendances à d'autres services pour nous (qui seront passés dans le controller)

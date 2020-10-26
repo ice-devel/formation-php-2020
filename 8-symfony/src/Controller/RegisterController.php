@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Manager\UserManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,7 @@ class RegisterController extends AbstractController
     /**
      * @Route("/inscription", name="user_create")
      */
-    public function create(Request $request)
+    public function create(Request $request, UserManager $userManager)
     {
        $user = new User();
        $form = $this->createForm(UserType::class, $user);
@@ -26,9 +27,7 @@ class RegisterController extends AbstractController
            // $form->isValid vérifie si le formulaire est valide :
            // ça veut qu'on checke les validations de l'entité
            if ($form->isValid()) {
-               $em = $this->getDoctrine()->getManager();
-               $em->persist($user);
-               $em->flush();
+               $userManager->insert($user, false);
 
                // message flash : passer un message d'une page à une autre
                $this->addFlash('success', 'Merci, inscription prise en compte.');
