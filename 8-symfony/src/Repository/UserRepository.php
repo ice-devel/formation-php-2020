@@ -64,4 +64,15 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /*
+     * Option query_builder pour les FormType
+     */
+    public function findAllEnabled()
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.isEnabled = :isEnabled')
+            ->setParameter('isEnabled', true)
+            ;
+    }
 }

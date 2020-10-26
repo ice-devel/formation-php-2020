@@ -266,11 +266,22 @@ Il existe une commande dans le MakerBundle pour générer un crud entier sur une
 (controller, template, form, route) :
 ```php bin/console make:crud```
 
-### Champs non mapped
+### Options des formulaires
+On peut configurer des options dans le FormType :
+ - le type de champ html à utiliser
+ - le label à afficher
+ - ajouter des contraintes de validation
+ - non mapped
+
+#### Champs non mapped
 On peut insérer des champs dans un formulaire même si ce ne sont pas des propriétés mappées (qui ont une équivalence en bdd).
 Il suffit de renseigner ```['mapped' => false]``` dans les options du champ de formulaire.
 
 On l'a utilisé par exemple dans le UserType pour le plainPassword.
+ 
+### Relations entre entités dans les formulaires
+- oneToMany / manyToOne
+- manyToMany  
  
 ## Sécurité / Authentification
 composer require security
@@ -330,4 +341,4 @@ Le container permet :
     
 Config form, Form array (rôles user), Form relation entre entité
 
-Voter, .env, déploiement, tests auto, design pattern
+Migration sql, Traduction, Voter, .env, déploiement, tests auto, design pattern

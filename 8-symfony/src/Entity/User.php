@@ -60,11 +60,13 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+
      */
     private $password;
 
-    /*
+    /**
      * Non mapped
+     *
      */
     private $plainPassword;
 
@@ -72,6 +74,15 @@ class User implements UserInterface
     {
         $this->posts = new ArrayCollection();
         $this->setCreatedAt(new \DateTime());
+    }
+
+    public function __toString()
+    {
+        return $this->name." - ".$this->email;
+    }
+
+    public function getIdAndEmail() {
+        return $this->id." - ".$this->email;
     }
 
     public function getId(): ?int
