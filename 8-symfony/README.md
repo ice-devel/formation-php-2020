@@ -119,7 +119,15 @@ avec la base de données grâce à un mapping.
         php bin/console make:entity
     4 - Mettre à jour la bdd
         php bin/console doctrine:schema:update --force
-       
+        Ou utiliser le système de migration
+        
+#### Migrations
+À préférer pour pouvoir revenir en arrière, et avoir une trace des requêtes/migrations qui ont lancées par le passé)
+```
+make:migration // créer une classe qui crée les requêtes pour mettre à jour la bdd
+doctrine:migrations:migrate // lancer les requêtes en attente
+```
+
 ### 2 - Utilisation des entités
 Dans un controller, on a besoin d'une entité : il faut utiliser Doctrine pour récupérer une entité
 ou l'instancier pour créer une nouvelle entité.
@@ -280,8 +288,14 @@ Il suffit de renseigner ```['mapped' => false]``` dans les options du champ de f
 On l'a utilisé par exemple dans le UserType pour le plainPassword.
  
 ### Relations entre entités dans les formulaires
-- oneToMany / manyToOne
-- manyToMany  
+- manyToOne
+    - association avec entités existantes : EntityType
+    - création d'une entité (un formulaire inbriqué) : FormType (nos forms à nous)
+- manyToMany  / oneToMany
+    - association avec entités existantes : EntityType
+    - création d'une ou plusieurs entités (un ou plusieurs formulaires inbriqués) : CollectionType.
+     Pour cette partie, il faut obligatoirement gérer avec du javascript l'ajout dynamique de form dans la page.
+    https://symfony.com/doc/current/form/form_collections.html
  
 ## Sécurité / Authentification
 composer require security
@@ -323,6 +337,16 @@ Il faut installer :
 ### Dans un template
 ``` {% if is_granted("ROLE_A_TESTER")```
 
+### Voters
+Les voters permettent de vérifier des régles métier avant d'effectuer une action sur une entité.
+Au lieu d'avoir les vérifications, on les mets dans des classes Voters qui seront automatiquement utilisées
+lors d'un ```$this->denyAccessUnlessGranted``` dans un controller.
+
+Un voter ne se déclenche que pour un seul type d'entité, mais on peut créer plusieurs voters pour un même type d'entité.
+
+On peut également attribuer une stratégie de décision d'accès :
+(un seul voter suffit ou tous les voters ou plus de voters qui disent oui que non...)
+https://symfony.com/doc/current/security/voters.html
 
 ## Après un GIT PULL
 composer update
@@ -338,7 +362,5 @@ Le service est maintenant accessible via le container.
 Le container permet :
     - d'instancier les services pour nous (et s'il est déjà instancié, il retourne l'instance existante)
     - de gérer les dépendances à d'autres services pour nous (qui seront passés dans le controller)
-    
-Config form, Form array (rôles user), Form relation entre entité
 
-Migration sql, Traduction, Voter, .env, déploiement, tests auto, design pattern, bundle connus
+Traduction, Voter, ParameterConverter, .env, déploiement, tests auto, design pattern, bundle connus

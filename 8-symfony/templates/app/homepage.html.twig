@@ -29,6 +29,12 @@
                         <br>
                         <span>le {{ p.createdAt | date('d/m/Y à H:i:s') }}</span>
                     </p>
+                    {# on affiche un lien de modification uniquement si c'est votre post #}
+                    {% if app.user.id == p.user.id %}
+                    <p>
+                        <a href="{{ path('edit_post', {'id': p.id}) }}">Modifier</a>
+                    </p>
+                    {% endif %}
                 </div>
             {% endfor %}
 

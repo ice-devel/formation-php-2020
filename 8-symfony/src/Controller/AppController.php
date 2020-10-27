@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Form\Post1Type;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,7 +11,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class AppController extends AbstractController
 {
@@ -156,28 +159,35 @@ class AppController extends AbstractController
     /**
      * @Route("/edit-post/{id}", name="edit_post")
      */
-    public function editPost($id)
+    public function editPost($id, Request $request)
     {
         // edition du post
         $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository('App:Post')->find($id);
 
-        if ($post == null) {
+        if (!$post instanceof Post) {
             throw new NotFoundHttpException();
         }
 
-        /** @var Post $post */
-        $post->setDescription("Le post modifié par Doctrine");
+        // est-ce que la personne connectée a le droit de modifier ce post ?
+        // ceci va déclencher la vérification des Voter qui prennent en charge les entités Post
+        $this->denyAccessUnlessGranted('POST_EDIT', $post);
 
-        // enregistrer en bdd
-        // pas obligé de faire un persist (car doctrine a récupéré cette entité, il la connait déjà)
-        // $em->persist($post);
-        $em->flush();
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
 
-        //
+        if ($form->isSubmitted() && $form->isValid()) {
+            // enregistrer en bdd
+            // pas obligé de faire un persist (car doctrine a récupéré cette entité, il la connait déjà)
+            $this->getDoctrine()->getManager()->flush();
 
-        $message = "Le post ".$post->getId(). " a bien été modifié";
-        return new Response($message);
+            return $this->redirectToRoute('homepage');
+        }
+
+        return $this->render('app/post_edit.html.twig', [
+            'post' => $post,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
@@ -187,6 +197,8 @@ class AppController extends AbstractController
         // récupération de l'entité
         $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository('App:Post')->find(2);
+
+        $this->denyAccessUnlessGranted('POST_DELETE', $post);
 
         // suppression en bdd
         $em->remove($post);

@@ -70,10 +70,16 @@ class User implements UserInterface
      */
     private $plainPassword;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $events;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->setCreatedAt(new \DateTime());
+        $this->events = new ArrayCollection();
     }
 
     public function __toString()
@@ -238,5 +244,36 @@ class User implements UserInterface
 
     public function setPlainPassword($plainPassword) {
         $this->plainPassword = $plainPassword;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events[] = $event;
+            $event->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->contains($event)) {
+            $this->events->removeElement($event);
+            // set the owning side to null (unless already changed)
+            if ($event->getUser() === $this) {
+                $event->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

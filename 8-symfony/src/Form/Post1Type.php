@@ -45,16 +45,18 @@ class Post1Type extends AbstractType
             /*
              * Associer des tags qui existent ?
              */
-            //->add('tags', null, ['choice_label' => 'name'])
+            ->add('tags', null, ['choice_label' => 'name'])
 
             /*
              * Créer des tags en même qu'on créé un post
              */
+                /*
             ->add('tags', CollectionType::class, [
                 'entry_type' => TagType::class,
                 'prototype' => true,
                 'allow_add' => true,
             ])
+                */
         ;
     }
 

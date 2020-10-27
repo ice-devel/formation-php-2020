@@ -1,0 +1,16 @@
+{% extends 'base.html.twig'%}
+
+{% block javascripts %}
+{% endblock %}
+
+{% block body %}
+    <h1>Modifier un post</h1>
+    <p style="color:green"></p>
+
+    {{ form_start(form) }}
+        {{ form_row(form) }}
+        <input type="submit" />
+    {{ form_end(form) }}
+{% endblock %}
+
+
