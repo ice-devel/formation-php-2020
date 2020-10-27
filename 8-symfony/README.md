@@ -161,7 +161,7 @@ un autre pour récup une seul entité.
     - avant et après un update : preUpdate / postUpdate
     - avant et après un delete : preRemove / postRemove
 
-## Formulaires
+## 4 - Formulaires
 
 Pour "hydrater" une entité, on passait avant par un formulaire html,
 puis on devait récupérer les valeurs une par une, les vérifier, instancier
@@ -297,7 +297,7 @@ On l'a utilisé par exemple dans le UserType pour le plainPassword.
      Pour cette partie, il faut obligatoirement gérer avec du javascript l'ajout dynamique de form dans la page.
     https://symfony.com/doc/current/form/form_collections.html
  
-## Sécurité / Authentification
+## 5 - Sécurité / Authentification
 composer require security
 
 Dans symfony, l'authentification et les sessions utilisateurs sont gérées par un composant
@@ -352,8 +352,7 @@ https://symfony.com/doc/current/security/voters.html
 composer update
 php bin/console doctrine:schema:update --force
 
-## Services
-
+## 6 - Services
 Un service est une classe qui offre une fonctionnalité particulière.
 On découpe nos fonctionnalités dans des classes (single responsibility principle), et on 
 va les charger dans un container de service.
@@ -363,4 +362,25 @@ Le container permet :
     - d'instancier les services pour nous (et s'il est déjà instancié, il retourne l'instance existante)
     - de gérer les dépendances à d'autres services pour nous (qui seront passés dans le controller)
 
-Traduction, Voter, ParameterConverter, .env, déploiement, tests auto, design pattern, bundle connus
+## 7 - Déploiement :
+- achat nom de domaine : faire pointer vers le serveur qui va héberger les applications/sites symfo
+- configurer serveur web (apache, php, mysql)
+- déployer l'application sur le serveur :
+    - se placer dans le dossier où on veut placer le projet
+    - git clone __URL__
+    - composer update
+    - configurer le .env.local si nécessaire (accès bdd, etc.)
+    - php bin/console doctrine:database:create
+    - php bin/console doctrine:migrations:migrate
+    - importer les données (de prod ou fixtures)
+- mise à jour du projet
+    - se placer dans le dossier du projet
+    - git pull
+    - php bin/console cache:clear --env=prod
+
+Paramètres de l'application :
+- Soit des variables d'environnements (OS, serveur web, symfony .env)
+- Soit les paramètres dans services.yaml
+
+design pattern, tests auto, 
+Traduction, ParamConverter, bundle connus, traits

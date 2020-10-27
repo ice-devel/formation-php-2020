@@ -22,6 +22,9 @@ class AppController extends AbstractController
      */
     public function index(Request $request)
     {
+        // récupérer un paramètre défini dans services.yaml
+        $this->getParameter('email_sender');
+
         /*
         $post = new Post();
         $post->setDescription("Mon premier post dynamique");
