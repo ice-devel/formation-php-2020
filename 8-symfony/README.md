@@ -382,5 +382,45 @@ Paramètres de l'application :
 - Soit des variables d'environnements (OS, serveur web, symfony .env)
 - Soit les paramètres dans services.yaml
 
-design pattern, tests auto, 
-Traduction, ParamConverter, bundle connus, traits
+## Uploads de fichier
+- Créer un service d'upload
+- Créer une propriété pour l'entité
+- Ajouter un champ non mappé dans le formulaire (FileType)
+- Appeler le service d'upload dans le controller
+
+https://symfony.com/doc/current/controller/upload_file.html#using-a-doctrine-listener
+
+## Tests automatisés
+On va utiliser l'outil PHPUnit pour PHP.
+Pour lancer l'outil : php bin/phpunit
+
+On va mettre en mettre des tests automatisés pour éviter les régressions
+et pour :
+- TDD : test driven development
+Développement piloté par les tests
+- Intégration continue et le déploiement continue
+
+### Tests unitaires
+### Tests fonctionnels
+
+https://symfony.com/doc/current/testing.html
+
+
+bundle connus :
+sonataadminbundle / easybundle
+fosuserbundle
+vichuploaderbundle
+liipimaginebundle
+
+POO :
+traits
+
+Pour aller plus loin  :
+Traduction,
+ParamConverter,
+swiftmailer,
+subscriber/listener
+
+
+
+

@@ -45,6 +45,12 @@ class Trainee
     private $birthdate;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $photoFilename;
+
+
+    /**
      * @ORM\ManyToMany(targetEntity=Skill::class, inversedBy="trainees")
      */
     private $skills;
@@ -136,5 +142,17 @@ class Trainee
     public function isBirthday() {
         $now = new \DateTime();
         return $this->getBirthdate()->format('d/m') == $now->format('d/m');
+    }
+
+    public function getPhotoFilename()
+    {
+        return $this->photoFilename;
+    }
+
+    public function setPhotoFilename($photoFilename)
+    {
+        $this->photoFilename = $photoFilename;
+
+        return $this;
     }
 }

@@ -3,6 +3,7 @@
 {% block title %}Page publique : liste stagiaires{% endblock %}
 
 {% block body %}
+    <h1>Liste des stagiaires</h1>
     <table>
         {% for trainee in trainees %}
         <tr>
@@ -22,6 +23,11 @@
                 {% if trainee.isBirthday %}
                 <img src="https://dyw7ncnq1en5l.cloudfront.net/optim/news/56/56147/57ea5a7ad8c68_png__908_512__overflow.jpg"
                      width="100px"/>
+                {% endif %}
+            </td>
+            <td>
+                {% if trainee.photoFilename is not null  %}
+                    <img src="{{ asset('uploads/' ~ trainee.photoFilename ) }}" />
                 {% endif %}
             </td>
         </tr>

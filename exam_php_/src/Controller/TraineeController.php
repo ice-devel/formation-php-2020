@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Trainee;
 use App\Form\TraineeType;
 use App\Repository\TraineeRepository;
+use App\Service\FileUpload;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,13 +29,19 @@ class TraineeController extends AbstractController
     /**
      * @Route("/new", name="trainee_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, FileUpload $fileUploader): Response
     {
         $trainee = new Trainee();
         $form = $this->createForm(TraineeType::class, $trainee);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $photoFile = $form->get('photo')->getData();
+            if ($photoFile != null) {
+                $photoFilename = $fileUploader->upload($photoFile);
+                $trainee->setPhotoFilename($photoFilename);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($trainee);
             $entityManager->flush();
@@ -61,12 +68,18 @@ class TraineeController extends AbstractController
     /**
      * @Route("/{id}/edit", name="trainee_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Trainee $trainee): Response
+    public function edit(Request $request, Trainee $trainee, FileUpload $fileUploader): Response
     {
         $form = $this->createForm(TraineeType::class, $trainee);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $photoFile = $form->get('photo')->getData();
+            if ($photoFile != null) {
+                $photoFilename = $fileUploader->upload($photoFile);
+                $trainee->setPhotoFilename($photoFilename);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('trainee_index');
