@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page publique : liste stagiaires{% endblock %}
+
+{% block body %}
+    <table>
+        {% for trainee in trainees %}
+        <tr>
+            <td>{{ trainee.id }}</td>
+            <td>{{ trainee.createdAt | date("d/m/Y H:i:s") }}</td>
+            <td>{{ trainee.name }}</td>
+            <td>{{ trainee.phone }}</td>
+            <td>{{ trainee.birthdate | date('d/m/Y') }}</td>
+            <td>
+                <ul>
+                {% for skill in trainee.skills %}
+                    <li>{{ skill.name }}</li>
+                {% endfor %}
+                </ul>
+            </td>
+            <td>
+                {% if trainee.isBirthday %}
+                <img src="https://dyw7ncnq1en5l.cloudfront.net/optim/news/56/56147/57ea5a7ad8c68_png__908_512__overflow.jpg"
+                     width="100px"/>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
