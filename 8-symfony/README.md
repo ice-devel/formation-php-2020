@@ -405,6 +405,9 @@ Développement piloté par les tests
 
 https://symfony.com/doc/current/testing.html
 
+Tuto par Fabien Potencier :
+https://symfony.com/doc/current/index.html
+Symfony 5 : The fast track
 
 bundle connus :
 sonataadminbundle / easybundle
